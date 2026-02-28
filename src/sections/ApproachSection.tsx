@@ -32,7 +32,7 @@ export function ApproachSection() {
 
       {/* ── "approach" watermark — bottom right ── */}
       <div className="approach-watermark" aria-hidden="true">
-        <span>approach</span>
+        <span>Approach</span>
       </div>
 
       {/* ── Main content grid ── */}
@@ -87,9 +87,9 @@ export function ApproachSection() {
           overflow: hidden;
           background: radial-gradient(
             ellipse 65% 80% at 15% 50%,
-            #321414 0%,
-            #1e0a0a 40%,
-            #110303 70%,
+            #6b2424 10%,
+            #581e1e 40%,
+            #330e0e 70%,
             #0a0101 100%
           );
           padding: 64px 24px;
@@ -108,9 +108,9 @@ export function ApproachSection() {
 
         .approach-watermark span {
           display: block;
-          font-size: clamp(80px, 13vw, 180px);
+          font-size: clamp(60px, 12vw, 120px);
           font-weight: 900;
-          color: white;
+          color: white/90;
           opacity: 0.05;
           letter-spacing: -0.02em;
           line-height: 1;

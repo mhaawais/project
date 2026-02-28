@@ -1,10 +1,22 @@
-// import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FadeIn } from '@/components/animations/FadeIn';
-import { StaggerContainer, StaggerItem } from '@/components/animations/StaggerContainer';
-import { RiDoubleQuotesL } from 'react-icons/ri';
+
+const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
 
 const testimonials = [
+  {
+    quote: "My go-to person for complex technical challenges.",
+    name: 'Gary Lu',
+    title: 'Solutions Architect',
+    avatar: '/images/avatar-gary.png',
+  },
+  {
+    quote: "His high degree of technical knowledge and his tenacity to solve issues makes him a very valuable asset to any organization.",
+    name: 'Jamie Salinas',
+    title: 'Technical Support Manager',
+    avatar: '/images/avatar-jamie.png',
+  },
   {
     quote: "Robert naturally adds value to organizations and goes the extra mile without being asked. These qualities are invaluable.",
     name: 'Edward Shanahan',
@@ -25,14 +37,93 @@ const testimonials = [
   },
 ];
 
+function getCardsPerView() {
+  if (typeof window === 'undefined') return 3;
+  if (window.innerWidth < 640) return 1;
+  if (window.innerWidth < 1024) return 2;
+  return 3;
+}
+
+function QuoteIcon({ size = 36 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 29.6 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ display: "block", flexShrink: 0 }}
+    >
+      <path
+        d="M18 4L17 5L15 5L14 6L13 6L13 8L12 9L12 14L13 15L19 15L19 10L18 9L17 9L16 8L16 7L17 6L18 6ZM9 4L8 5L6 5L4 7L4 15L10 15L10 9L8 9L7 8L7 7L8 6L9 6Z"
+        fill="#8B1A10"
+      />
+    </svg>
+  );
+}
+
 export function TestimonialsSection() {
-  // const [activeDot, setActiveDot] = useState(0);
+  const [activePage, setActivePage] = useState(0);
+  const [cardsPerView, setCardsPerView] = useState(3);
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const totalPages = Math.ceil(testimonials.length / cardsPerView);
+
+  useEffect(() => {
+    const update = () => {
+      const cpv = getCardsPerView();
+      setCardsPerView(cpv);
+      // clamp activePage if needed
+      setActivePage(prev => {
+        const maxPage = Math.ceil(testimonials.length / cpv) - 1;
+        return Math.min(prev, maxPage);
+      });
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const startAutoPlay = useCallback(() => {
+    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    autoPlayRef.current = setInterval(() => {
+      setActivePage(prev => (prev + 1) % totalPages);
+    }, 5000);
+  }, [totalPages]);
+
+  useEffect(() => {
+    startAutoPlay();
+    return () => { if (autoPlayRef.current) clearInterval(autoPlayRef.current); };
+  }, [startAutoPlay]);
+
+  const goTo = (idx: number) => {
+    setActivePage(idx);
+    startAutoPlay();
+  };
+
+  // Touch/swipe support
+  const touchStartX = useRef<number>(0);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) goTo((activePage + 1) % totalPages);
+      else goTo((activePage - 1 + totalPages) % totalPages);
+    }
+  };
+
+  const visibleCards = testimonials.slice(
+    activePage * cardsPerView,
+    activePage * cardsPerView + cardsPerView
+  );
 
   return (
     <section className="tst-section">
       <div className="tst-container">
 
-        {/* ── Headline ── */}
+        {/* ── Heading ── */}
         <FadeIn>
           <h2 className="tst-heading">
             Trusted Behind the Scenes of{' '}
@@ -42,62 +133,85 @@ export function TestimonialsSection() {
         </FadeIn>
 
         {/* ── Cards ── */}
-        <StaggerContainer staggerDelay={0.15} className="tst-grid">
-          {testimonials.map((t, i) => (
-            <StaggerItem key={i}>
-              <motion.div
-                className="tst-card"
-                whileHover={{ y: -4, borderColor: '#972b1c' }}
-                transition={{ duration: 0.25 }}
-              >
-                {/* React-icons double quote — matches screenshot */}
-                <RiDoubleQuotesL className="tst-quote-icon" />
+        <div
+          className="tst-track"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={`page-${activePage}-${cardsPerView}`}
+              className="tst-cards-row"
+              initial={{ opacity: 0, x: 32 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -32 }}
+              transition={{ duration: 0.35, ease: EASE }}
+            >
+              {visibleCards.map((t, i) => (
+                <div key={`${activePage}-${i}`} className="tst-card">
+                  {/* Figma-matched double quote SVG */}
+                  <QuoteIcon size={60} />
 
-                {/* Quote text */}
-                <p className="tst-quote-text">{t.quote}</p>
+                  {/* Quote */}
+                  <p className="tst-quote-text">{t.quote}</p>
 
-                {/* Thin divider */}
-                <div className="tst-divider" />
+                  {/* Divider */}
+                  <div className="tst-divider" />
 
-                {/* Author row */}
-                <div className="tst-author">
-                  <div className="tst-avatar-wrap">
-                    <img src={t.avatar} alt={t.name} className="tst-avatar" />
-                  </div>
-                  <div className="tst-author-info">
-                    <span className="tst-author-name">{t.name},</span>{' '}
-                    <span className="tst-author-title">{t.title}</span>
+                  {/* Author */}
+                  <div className="tst-author">
+                    <div className="tst-avatar-wrap">
+                      <img src={t.avatar} alt={t.name} className="tst-avatar" />
+                    </div>
+                    <div className="tst-author-info">
+                      <span className="tst-author-name">{t.name},</span>{' '}
+                      <span className="tst-author-title">{t.title}</span>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+              ))}
+
+              {/*
+                Ghost cards to fill the last page if fewer cards remain
+                (keeps grid columns consistent so cards don't stretch)
+              */}
+              {visibleCards.length < cardsPerView &&
+                Array.from({ length: cardsPerView - visibleCards.length }).map((_, i) => (
+                  <div key={`ghost-${i}`} className="tst-card tst-card--ghost" aria-hidden="true" />
+                ))
+              }
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* ── Dot pagination ── */}
-        {/* <div className="tst-dots">
-          {testimonials.map((_, i) => (
+        <div className="tst-dots">
+          {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
-              className={`tst-dot ${i === activeDot ? 'tst-dot--active' : ''}`}
-              onClick={() => setActiveDot(i)}
-              aria-label={`Go to testimonial ${i + 1}`}
+              className={`tst-dot ${i === activePage ? 'tst-dot--active' : ''}`}
+              onClick={() => goTo(i)}
+              aria-label={`Go to page ${i + 1}`}
             />
           ))}
-        </div> */}
+        </div>
 
       </div>
 
       <style>{`
-        /* ── Section — rich deep red background matching screenshot ── */
+
+        /* ══════════════════════════════════════════════════════════
+           SECTION
+        ══════════════════════════════════════════════════════════ */
         .tst-section {
-          background: radial-gradient(
-            ellipse 90% 60% at 50% 0%,
-            #2a0606 0%,
-            #1a0303 40%,
-            #0e0101 100%
-          );
-          padding: 72px 0 60px;
+          background:
+            radial-gradient(
+              ellipse 90% 60% at 50% 0%,
+              #2e0707 20%,
+              #1c0404 40%,
+              #200707 100%
+            );
+          padding: 70px 0 58px;
         }
 
         .tst-container {
@@ -106,82 +220,103 @@ export function TestimonialsSection() {
           padding: 0 24px;
         }
 
-        /* ── Heading ── */
+        /* ══════════════════════════════════════════════════════════
+           HEADING
+        ══════════════════════════════════════════════════════════ */
         .tst-heading {
           text-align: center;
-          font-size: clamp(22px, 3vw, 36px);
+          font-size: clamp(20px, 2.4vw, 32px);
           font-weight: 800;
-          color: #ffffff;
-          line-height: 1.25;
+          color: #797878;
+          line-height: 1.28;
           margin: 0 auto 48px;
-          max-width: 780px;
+          max-width: 720px;
           letter-spacing: -0.02em;
         }
 
-        .tst-accent {
-          color: #c0392b;
+        .tst-accent { color: #c0392b; }
+
+        /* ══════════════════════════════════════════════════════════
+           TRACK + CARDS ROW
+        ══════════════════════════════════════════════════════════ */
+        .tst-track {
+          overflow: hidden;
+          touch-action: pan-y;
         }
 
-        /* ── Grid ── */
-        .tst-grid {
+        .tst-cards-row {
           display: grid;
+          /* Desktop: 3 columns */
           grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
+          gap: 18px;
+          align-items: stretch;
         }
 
-        /* ── Card — darker red tint ── */
+        /* ══════════════════════════════════════════════════════════
+           CARD
+           Figma: dark maroon #1c0404, red border, 12px radius
+        ══════════════════════════════════════════════════════════ */
         .tst-card {
           background: #1c0404;
-          border: 1px solid rgba(150, 43, 28, 0.4);
+          border: 1px solid rgba(148, 40, 24, 0.42);
           border-radius: 12px;
-          padding: 28px 26px 24px;
+          padding: 26px 24px 22px;
           display: flex;
           flex-direction: column;
-          height: 100%;
           box-sizing: border-box;
-          transition: border-color 0.25s;
+          min-height: 240px;
+          transition: border-color 0.22s, transform 0.22s;
+        }
+        .tst-card:hover {
+          border-color: rgba(148, 40, 24, 0.75);
+          transform: translateY(-3px);
         }
 
-        /* ── RiDoubleQuotesL icon — red, large, matches screenshot ── */
-        .tst-quote-icon {
-          width: 36px;
-          height: 36px;
-          color: #c0392b;
-          margin-bottom: 18px;
-          flex-shrink: 0;
+        /* Ghost card — invisible placeholder, keeps grid shape */
+        .tst-card--ghost {
+          background: transparent;
+          border-color: transparent;
+          pointer-events: none;
+        }
+        .tst-card--ghost:hover {
+          transform: none;
+          border-color: transparent;
         }
 
-        /* ── Quote body ── */
+        /* ── Quote text ── */
         .tst-quote-text {
-          font-size: clamp(13px, 1.05vw, 15px);
+          font-size: 0.855rem;
           color: #c8b0b0;
-          line-height: 1.7;
-          margin: 0 0 20px;
+          line-height: 1.72;
+          margin: 0 0 18px;
           flex: 1;
         }
 
-        /* ── Thin red divider ── */
+        /* ── Divider ── */
         .tst-divider {
           width: 100%;
           height: 1px;
-          background: rgba(150, 43, 28, 0.4);
-          margin-bottom: 16px;
+          background: #707070;
+          margin-bottom: 14px;
+          flex-shrink: 0;
         }
 
-        /* ── Author row ── */
+        /* ── Author ── */
         .tst-author {
           display: flex;
           align-items: center;
           gap: 10px;
+          flex-shrink: 0;
         }
 
         .tst-avatar-wrap {
-          width: 38px;
-          height: 38px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
           overflow: hidden;
           flex-shrink: 0;
-          border: 2px solid rgba(150, 43, 28, 0.5);
+          border: white;
+          background: #2a0808;
         }
 
         .tst-avatar {
@@ -192,86 +327,72 @@ export function TestimonialsSection() {
         }
 
         .tst-author-info {
-          font-size: 13px;
-          line-height: 1.4;
+          font-size: 0.78rem;
+          line-height: 1.42;
           color: #c8b0b0;
         }
 
-        .tst-author-name {
-          color: #ffffff;
-          font-weight: 600;
-        }
+        .tst-author-name  { color: #ffffff; font-weight: 600; }
+        .tst-author-title { color: #e0c0c0; font-weight: 400; }
 
-        .tst-author-title {
-          color: #a08080;
-          font-weight: 400;
-        }
-
-        /* ── Dot pagination ── */
+        /* ══════════════════════════════════════════════════════════
+           DOTS
+        ══════════════════════════════════════════════════════════ */
         .tst-dots {
           display: flex;
           justify-content: center;
           align-items: center;
-          gap: 8px;
-          margin-top: 36px;
+          gap: 7px;
+          margin-top: 30px;
         }
 
         .tst-dot {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background: #4a1a1a;
+          background: #3a1414;
           border: none;
           cursor: pointer;
           padding: 0;
-          transition: background 0.2s, transform 0.2s;
+          transition: background 0.2s, width 0.25s, border-radius 0.25s;
+          flex-shrink: 0;
         }
 
+        /* Active: stretches to a pill — matches Figma */
         .tst-dot--active {
           background: #c0392b;
-          transform: scale(1.2);
+          width: 20px;
+          border-radius: 4px;
         }
 
-        /* ── Tablet ── */
-        @media (min-width: 768px) and (max-width: 1023px) {
-          .tst-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-          }
-          .tst-card {
-            padding: 22px 18px 20px;
-          }
+        /* ══════════════════════════════════════════════════════════
+           TABLET: 640–1023px — 2 columns
+        ══════════════════════════════════════════════════════════ */
+        @media (min-width: 640px) and (max-width: 1023px) {
+          .tst-cards-row  { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+          .tst-section    { padding: 56px 0 46px; }
+          .tst-heading    { font-size: clamp(18px, 3vw, 26px); margin-bottom: 38px; }
+          .tst-card       { padding: 22px 20px 20px; min-height: 220px; }
+          .tst-quote-text { font-size: 0.84rem; }
         }
 
-        /* ── Mobile ── */
-        @media (max-width: 767px) {
-          .tst-section {
-            padding: 48px 0 44px;
+        /* ══════════════════════════════════════════════════════════
+           MOBILE: <640px — 1 column, swipeable
+        ══════════════════════════════════════════════════════════ */
+        @media (max-width: 639px) {
+          .tst-section    { padding: 44px 0 38px; }
+          .tst-container  { padding: 0 16px; }
+          .tst-heading    { font-size: clamp(17px, 5.5vw, 22px); margin-bottom: 28px; }
+          .tst-cards-row  { grid-template-columns: 1fr; gap: 0; }
+          .tst-card       {
+            padding: 22px 20px 20px;
+            min-height: 200px;
+            border-radius: 10px;
           }
-          .tst-grid {
-            grid-template-columns: 1fr;
-            gap: 16px;
-          }
-          .tst-heading {
-            font-size: 1.5rem;
-            margin-bottom: 32px;
-          }
-          .tst-card {
-            padding: 24px 20px 20px;
-          }
-          .tst-quote-text {
-            font-size: 0.9rem;
-          }
-        }
-
-        /* ── Small mobile ── */
-        @media (max-width: 420px) {
-          .tst-container {
-            padding: 0 16px;
-          }
-          .tst-heading {
-            font-size: 1.25rem;
-          }
+          .tst-quote-text { font-size: 0.875rem; }
+          .tst-dots       { margin-top: 22px; gap: 6px; }
+          .tst-dot        { width: 7px; height: 7px; }
+          .tst-dot--active { width: 18px; }
         }
       `}</style>
     </section>

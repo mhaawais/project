@@ -1,14 +1,16 @@
+import { motion } from 'framer-motion';
 import { FadeIn } from '@/components/animations/FadeIn';
-import { StaggerContainer, StaggerItem } from '@/components/animations/StaggerContainer';
 
-const whoIWorkWith = [
+const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
+
+const WHO_I_WORK_WITH = [
   'Executives making high-stakes technology bets',
   'Product leaders navigating feature sprawl and roadmap drift',
   'Enterprise teams implementing AI without clear governance',
   'Organizations about to commit significant capital or reputation',
 ];
 
-const whatIDo = [
+const WHAT_I_DO = [
   'Pressure-test ideas before major investment',
   'Challenge assumptions that hide risk',
   'Clarify governance and decision frameworks',
@@ -18,346 +20,322 @@ const whatIDo = [
 
 export function ServicesSection() {
   return (
-    <section id="services" className="services-section">
-      {/* ── "Ideas" watermark — top right, only in headline area ── */}
-      <div className="services-watermark" aria-hidden="true">
-        <span>Ideas</span>
-      </div>
+    <section className="svc-section">
 
-      <div className="services-inner">
-        {/* Headline — centered, solid dark bg, NO background image here */}
+      {/* ══ TOP ZONE: headline + watermark ══ */}
+      <div className="svc-top">
+        {/* Faint "ideas" watermark — right side */}
+        <div className="svc-watermark" aria-hidden="true">
+          <span>Ideas</span>
+        </div>
+
         <FadeIn>
-          <div className="services-headline-wrap">
-            <h2 className="services-h2">
-              I Ruin Bad Ideas Early So You<br />
-              Only Invest In What&apos;s{' '}
-              <span style={{ color: '#d84a35' }}>Truly Worth Building</span>
-            </h2>
-          </div>
+          <h2 className="svc-h2">
+            I Ruin Bad Ideas Early So You<br />
+            Only Invest In What's{' '}
+            <span className="svc-accent">Truly Worth Building</span>
+          </h2>
         </FadeIn>
       </div>
 
-      {/* ── Below the line: bg image starts here (FULL WIDTH) ── */}
-      <div className="services-body-wrap">
-        {/* Background image + overlay ONLY in this block */}
-        <div className="services-bg" aria-hidden="true">
-          <img src="/images/updated.png" alt="" className="services-bg-img" />
-          <div className="services-bg-overlay" />
-          {/* extra soft vignette for readability while keeping image visible */}
-          <div className="services-bg-vignette" />
+      {/* Thin divider line */}
+      <div className="svc-divider" />
+
+      {/* ══ BOTTOM ZONE: bg image + content overlay ══ */}
+      <div className="svc-bottom">
+        {/* Background image — full bleed, dark red overlay on top */}
+        <div className="svc-bg-img-wrap">
+          <img
+            src="/images/updated.png"
+            alt=""
+            className="svc-bg-img"
+          />
+          {/* Dark maroon overlay — left heavier, right lighter so text is readable */}
+          <div className="svc-bg-overlay" />
         </div>
 
-        {/* Lists grid */}
-        <div className="services-body">
-          {/* Left spacer — image visible here */}
-          <div className="services-left-spacer" />
+        {/* Content floats right */}
+        <div className="svc-bottom-inner">
+          <div className="svc-content-col">
 
-          {/* Right: stacked lists */}
-          <StaggerContainer staggerDelay={0.1} className="services-lists">
-            <StaggerItem>
-              <div className="services-list-block">
-                <h3 className="services-list-title">Who I Work With</h3>
-                <ul className="services-list">
-                  {whoIWorkWith.map((item, i) => (
-                    <li key={i} className="services-list-item">
-                      <span className="services-bullet" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </StaggerItem>
+            {/* Who I Work With */}
+            <motion.div
+              className="svc-block"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.55, ease: EASE }}
+            >
+              <h3 className="svc-block-title">Who I Work With</h3>
+              <ul className="svc-list">
+                {WHO_I_WORK_WITH.map((item) => (
+                  <li key={item} className="svc-list-item">
+                    <span className="svc-bullet" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
 
-            <StaggerItem>
-              <div className="services-list-block">
-                <h3 className="services-list-title">What I Do</h3>
-                <ul className="services-list">
-                  {whatIDo.map((item, i) => (
-                    <li key={i} className="services-list-item">
-                      <span className="services-bullet" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </StaggerItem>
-          </StaggerContainer>
+            {/* What I Do */}
+            <motion.div
+              className="svc-block"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.55, delay: 0.12, ease: EASE }}
+            >
+              <h3 className="svc-block-title">What I Do</h3>
+              <ul className="svc-list">
+                {WHAT_I_DO.map((item) => (
+                  <li key={item} className="svc-list-item">
+                    <span className="svc-bullet" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+          </div>
         </div>
       </div>
 
-      {/* ── Bottom accent line ── */}
-      <div className="services-bottom-line" />
-
       <style>{`
-        /* =============================================
-           SECTION — solid dark bg (headline area)
-        ============================================= */
-        .services-section {
+
+        /* ══════════════════════════════════════════════════════════════════
+           SECTION SHELL
+        ══════════════════════════════════════════════════════════════════ */
+        .svc-section {
           position: relative;
           overflow: hidden;
-          background: #0e0202;
+          background: #0b0101;
         }
 
-        /* ── "Ideas" watermark — top right of headline area ── */
-        .services-watermark {
+        /* ══════════════════════════════════════════════════════════════════
+           TOP ZONE — dark bg, centered headline, faint watermark
+        ══════════════════════════════════════════════════════════════════ */
+        .svc-top {
+  position: relative;
+  overflow: hidden;
+
+  background:
+    /* Light red overlay glow */
+    radial-gradient(
+      ellipse 65% 75% at 50% 45%,
+      rgba(151, 43, 28, 0.28) 0%,
+      rgba(151, 43, 28, 0.18) 35%,
+      transparent 70%
+    ),
+
+    /* Base dark gradient */
+    radial-gradient(
+      ellipse 70% 90% at 50% 50%,
+      #1c0808 0%,
+      #110303 55%,
+      #0b0101 100%
+    );
+
+  padding: 52px 24px 44px;
+  text-align: center;
+}
+
+        /* Faint "ideas" watermark — Figma: large, very low opacity, right-aligned */
+        .svc-watermark {
           position: absolute;
-          top: 0;
-          right: -10px;
-          z-index: 3;
+          top: 50%;
+          right: -12px;
+          transform: translateY(-50%);
           pointer-events: none;
           user-select: none;
-          line-height: 1;
+          z-index: 0;
         }
-
-        .services-watermark span {
+        .svc-watermark span {
           display: block;
-          font-size: clamp(80px, 14vw, 200px);
+          font-size: clamp(72px, 12vw, 172px);
           font-weight: 900;
           color: white;
-          opacity: 0.06;
+          opacity: 0.055;
+          line-height: 1;
           letter-spacing: -0.02em;
-          line-height: 0.85;
+          white-space: nowrap;
         }
 
-        /* ── Headline inner (constrained) ── */
-        .services-inner {
+        .svc-h2 {
           position: relative;
-          z-index: 2;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 56px 24px 0;
-        }
-
-        .services-headline-wrap {
-          text-align: center;
-          padding-bottom: 40px;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .services-h2 {
-          font-size: clamp(24px, 3vw, 42px);
+          z-index: 1;
+          font-size: clamp(20px, 2.2vw, 30px);
           font-weight: 800;
-          color: #ffffff;
-          line-height: 1.2;
+          line-height: 1.3;
           letter-spacing: -0.02em;
+          color: #ffffff;
           margin: 0;
         }
 
-        /* =============================================
-           BODY WRAP — FULL WIDTH background
-        ============================================= */
-        .services-body-wrap {
-          position: relative;
-          width: 100vw;                 /* ✅ full viewport width */
-          left: 50%;
-          right: 50%;
-          margin-left: -50vw;           /* ✅ escape max-width containers */
-          margin-right: -50vw;
-          overflow: hidden;
+        .svc-accent {
+          color: #d84a35;
         }
 
-        .services-bg {
+        /* ══════════════════════════════════════════════════════════════════
+           DIVIDER — thin teal/blue line between zones
+           Figma: very thin ~1px, slightly blue-teal tint
+        ══════════════════════════════════════════════════════════════════ */
+        .svc-divider {
+          height: 1px;
+          background: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(60, 100, 160, 0.55) 20%,
+            rgba(80, 130, 200, 0.7)  50%,
+            rgba(60, 100, 160, 0.55) 80%,
+            transparent 100%
+          );
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           BOTTOM ZONE — bg image + dark overlay + right-side content
+        ══════════════════════════════════════════════════════════════════ */
+        .svc-bottom {
+          position: relative;
+          min-height: 420px;
+        }
+
+        /* Background image — full bleed */
+        .svc-bg-img-wrap {
           position: absolute;
           inset: 0;
           z-index: 0;
         }
 
-        .services-bg-img {
+        .svc-bg-img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: center;
+          object-position: center center;
           display: block;
-          transform: scale(1.03);       /* tiny scale to avoid edge gaps */
         }
 
-        /* ✅ Increased visibility (less dark) */
-        .services-bg-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to right,
-            rgba(30, 6, 6, 0.42) 0%,
-            rgba(25, 5, 5, 0.50) 45%,
-            rgba(18, 4, 4, 0.62) 100%
-          );
-        }
+        /*
+          Dark overlay:
+          Figma — left half is darker (image partially visible, deep maroon tint),
+          right half slightly lighter so text reads clearly.
+          Overall: very dark crimson wash over everything.
+        */
+        .svc-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    /* Softer left gradient */
+    linear-gradient(
+      to right,
+      rgba(65, 12, 12, 0.55) 0%,
+      rgba(18, 3, 3, 0.45) 30%,
+      rgba(14, 2, 2, 0.35) 60%,
+      rgba(14, 2, 2, 0.25) 100%
+    ),
 
-        /* Keeps edges readable without killing image */
-        .services-bg-vignette {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(
-            ellipse 90% 70% at 70% 50%,
-            rgba(0,0,0,0.0) 0%,
-            rgba(0,0,0,0.10) 55%,
-            rgba(0,0,0,0.25) 100%
-          );
-          pointer-events: none;
-        }
+    /* Lighter global crimson wash */
+    rgba(60, 8, 8, 0.30);
+}
 
-        /* =============================================
-           BODY CONTENT — constrained to max width
-        ============================================= */
-        .services-body {
+        /* Inner content wrapper — max-width + padding */
+        .svc-bottom-inner {
           position: relative;
-          z-index: 2;
-          max-width: 1200px;
+          z-index: 1;
+          max-width: 1100px;
           margin: 0 auto;
-          padding: 40px 24px 64px;
-
-          display: grid;
-          grid-template-columns: 44% 1fr;
-          gap: 0;
-          align-items: start;
+          padding: 0 24px;
+          display: flex;
+          justify-content: flex-end;   /* content floats RIGHT like Figma */
         }
 
-        .services-left-spacer {
-          /* intentionally empty: background shows through */
-        }
-
-        .services-lists {
+        /* Content column — sits on right ~52% */
+        .svc-content-col {
+          width: 52%;
+          padding: 44px 0 52px;
           display: flex;
           flex-direction: column;
           gap: 36px;
         }
 
-        .services-list-block {
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
-        }
-
-        .services-list-title {
-          font-size: clamp(16px, 1.4vw, 20px);
+        /* ══════════════════════════════════════════════════════════════════
+           CONTENT BLOCKS
+        ══════════════════════════════════════════════════════════════════ */
+        .svc-block-title {
+          font-size: 1rem;
           font-weight: 700;
           color: #ffffff;
-          margin: 0;
+          margin: 0 0 14px 0;
           letter-spacing: -0.01em;
         }
 
-        .services-list {
+        .svc-list {
           list-style: none;
           margin: 0;
           padding: 0;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px;
         }
 
-        .services-list-item {
+        .svc-list-item {
           display: flex;
           align-items: flex-start;
           gap: 10px;
-          color: #e2caca;               /* slightly brighter for new overlay */
+          color: #ddc8c8;
           font-size: 0.82rem;
           line-height: 1.55;
         }
 
-        .services-bullet {
-          width: 6px;
-          height: 6px;
-          background: #d84a35;
+        /* Red square bullet — Figma: small filled red square ~5×5px */
+        .svc-bullet {
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          min-width: 5px;
+          background: #c0392b;
           border-radius: 1px;
+          margin-top: 5px;   /* vertically align with first line of text */
           flex-shrink: 0;
-          margin-top: 5px;
         }
 
-        /* ── Bottom accent line ── */
-        .services-bottom-line {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 2px;
-          background: linear-gradient(
-            to right,
-            transparent 0%,
-            #1a3a6e 30%,
-            #2a5ab0 50%,
-            #1a3a6e 70%,
-            transparent 100%
-          );
-          z-index: 3;
-        }
 
-        /* =============================================
-           TABLET: 768px – 1023px
-        ============================================= */
+        /* ══════════════════════════════════════════════════════════════════
+           TABLET: 768–1023px
+        ══════════════════════════════════════════════════════════════════ */
         @media (min-width: 768px) and (max-width: 1023px) {
-          .services-body {
-            grid-template-columns: 36% 1fr;
-            padding: 36px 20px 56px;
-          }
-
-          .services-inner {
-            padding: 48px 20px 0;
-          }
-
-          .services-h2 {
-            font-size: clamp(22px, 3.5vw, 32px);
-          }
+          .svc-top      { padding: 44px 20px 36px; }
+          .svc-h2       { font-size: clamp(18px, 2.8vw, 26px); }
+          .svc-bottom   { min-height: 380px; }
+          .svc-content-col { width: 60%; padding: 36px 0 44px; gap: 28px; }
         }
 
-        /* =============================================
-           MOBILE: < 768px
-        ============================================= */
+        /* ══════════════════════════════════════════════════════════════════
+           MOBILE: <768px — content full width, stacked
+        ══════════════════════════════════════════════════════════════════ */
         @media (max-width: 767px) {
-          .services-bg-overlay {
-            background: rgba(20, 4, 4, 0.62); /* ✅ still visible, readable */
-          }
-
-          .services-body {
-            grid-template-columns: 1fr;
-            padding: 28px 20px 48px;
-          }
-
-          .services-left-spacer {
-            display: none;
-          }
-
-          .services-inner {
-            padding: 40px 20px 0;
-          }
-
-          .services-headline-wrap {
-            padding-bottom: 32px;
-          }
-
-          .services-h2 {
-            font-size: clamp(20px, 5.5vw, 28px);
-          }
-
-          .services-lists {
+          .svc-top      { padding: 36px 20px 28px; }
+          .svc-h2       { font-size: clamp(17px, 5vw, 24px); }
+          .svc-watermark { display: none; }
+          .svc-bottom   { min-height: auto; }
+          .svc-bottom-inner { justify-content: center; }
+          .svc-content-col {
+            width: 100%;
+            padding: 32px 0 40px;
             gap: 28px;
           }
-
-          .services-list-item {
-            font-size: 0.85rem;
-          }
-
-          .services-watermark span {
-            font-size: clamp(60px, 20vw, 120px);
-          }
+          .svc-block-title { font-size: 0.95rem; }
+          .svc-list-item   { font-size: 0.82rem; }
         }
 
-        /* =============================================
-           SMALL MOBILE: < 420px
-        ============================================= */
         @media (max-width: 420px) {
-          .services-inner {
-            padding: 32px 16px 0;
-          }
-
-          .services-body {
-            padding: 24px 16px 40px;
-          }
-
-          .services-list-item {
-            font-size: 0.82rem;
-          }
+          .svc-top    { padding: 28px 16px 22px; }
+          .svc-bottom-inner { padding: 0 16px; }
+          .svc-content-col  { padding: 26px 0 32px; gap: 24px; }
         }
+
       `}</style>
     </section>
   );
 }
+
+

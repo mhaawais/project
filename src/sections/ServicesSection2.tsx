@@ -20,16 +20,15 @@ const enterpriseResults = [
 export function ServicesSection2() {
   return (
     <section id="results" className="results-section">
-      {/* ── Full-bleed background image + overlay ── */}
+      {/* ══ Full-bleed background image ══ */}
       <div className="results-bg" aria-hidden="true">
         <img src="/images/updated-2.png" alt="" className="results-bg-img" />
         <div className="results-bg-overlay" />
-        <div className="results-bg-vignette" />
       </div>
 
-      {/* ── Content grid: lists left, image right ── */}
+      {/* ══ Content grid ══ */}
       <div className="results-inner">
-        {/* LEFT: stacked lists */}
+        {/* LEFT: stacked lists — top aligned */}
         <StaggerContainer staggerDelay={0.1} className="results-lists">
           <StaggerItem>
             <div className="results-list-block">
@@ -60,27 +59,31 @@ export function ServicesSection2() {
           </StaggerItem>
         </StaggerContainer>
 
-        {/* RIGHT: image panel — same height as text column, NOT stretched */}
+        {/* RIGHT: image — top aligned to start opposite the lists */}
         <FadeIn direction="right">
           <div className="results-side">
-            <div className="results-side-img-wrap">
-              <img src="/images/updated-3.png" alt="Enterprise meeting" className="results-side-img" />
-              <div className="results-side-img-fade" />
-            </div>
+            <img
+              src="/images/updated-3.png"
+              alt="Enterprise meeting"
+              className="results-side-img"
+            />
+            <div className="results-side-fade" />
           </div>
         </FadeIn>
       </div>
 
       <style>{`
-        /* =============================================
+        /* ══════════════════════════════════════════════════════════════════
            SECTION
-        ============================================= */
+        ══════════════════════════════════════════════════════════════════ */
         .results-section {
           position: relative;
           overflow: hidden;
         }
 
-        /* ── Full-bleed background ── */
+        /* ══════════════════════════════════════════════════════════════════
+           BACKGROUND IMAGE
+        ══════════════════════════════════════════════════════════════════ */
         .results-bg {
           position: absolute;
           inset: 0;
@@ -93,63 +96,57 @@ export function ServicesSection2() {
           object-fit: cover;
           object-position: center center;
           display: block;
-          transform: scale(1.02);
         }
 
-        /* ✅ MUCH MORE visible bg image (less dark overlay) */
         .results-bg-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            to right,
-            rgba(18, 4, 4, 0.40) 0%,
-            rgba(20, 5, 5, 0.44) 45%,
-            rgba(14, 3, 3, 0.48) 100%
-          );
+          background:
+            linear-gradient(
+              to right,
+              rgba(12, 2, 2, 0.40) 0%,
+              rgba(14, 3, 3, 0.30) 45%,
+              rgba(10, 2, 2, 0.20) 100%
+            );
         }
 
-        /* Light vignette for readability (still keeps bg visible) */
-        .results-bg-vignette {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(
-            ellipse 95% 75% at 70% 50%,
-            rgba(0,0,0,0.00) 0%,
-            rgba(0,0,0,0.08) 55%,
-            rgba(0,0,0,0.18) 100%
-          );
-          pointer-events: none;
-        }
-
-        /* ── Inner grid ── */
+        /* ══════════════════════════════════════════════════════════════════
+           INNER GRID — reduced vertical padding to decrease section height
+        ══════════════════════════════════════════════════════════════════ */
         .results-inner {
           position: relative;
           z-index: 2;
-          max-width: 1200px;
+          max-width: 1100px;
           margin: 0 auto;
-          padding: 56px 24px 56px;
+
+          /* ↓ reduced from 52px/52px */
+          padding: 36px 32px 36px 48px;
+
           display: grid;
-          grid-template-columns: 1fr 40%;
-          gap: 56px;
-          align-items: stretch; /* ✅ makes both columns equal height */
+          grid-template-columns: 1fr 42%;
+          gap: 48px;
+
+          /* top aligned like figma */
+          align-items: start;
         }
 
-        /* ── Lists ── */
+        /* ══════════════════════════════════════════════════════════════════
+           LEFT LISTS — slightly tighter spacing to reduce total height
+        ══════════════════════════════════════════════════════════════════ */
         .results-lists {
           display: flex;
           flex-direction: column;
-          gap: 36px;
-          justify-content: center;
+          gap: 26px; /* ↓ reduced from 34px */
         }
 
         .results-list-block {
           display: flex;
           flex-direction: column;
-          gap: 14px;
+          gap: 10px; /* ↓ reduced from 12px */
         }
 
         .results-list-title {
-          font-size: clamp(16px, 1.4vw, 20px);
+          font-size: clamp(15px, 1.35vw, 19px);
           font-weight: 700;
           color: #ffffff;
           margin: 0;
@@ -162,140 +159,112 @@ export function ServicesSection2() {
           padding: 0;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px; /* ↓ reduced from 9px */
         }
 
         .results-list-item {
           display: flex;
           align-items: flex-start;
           gap: 10px;
-          color: #f0dede; /* slightly brighter since bg is more visible */
-          font-size: 0.82rem;
-          line-height: 1.55;
+          color: #eedcdc;
+          font-size: 0.8rem;
+          line-height: 1.50; /* slightly tighter */
         }
 
         .results-bullet {
-          width: 6px;
-          height: 6px;
-          background: #d84a35;
+          display: inline-block;
+          width: 5px;
+          height: 5px;
+          min-width: 5px;
+          background: #c0392b;
           border-radius: 1px;
-          flex-shrink: 0;
           margin-top: 5px;
+          flex-shrink: 0;
         }
 
-        /* =============================================
-           RIGHT IMAGE PANEL
-           - same height as text column (grid stretch)
-           - image fully visible (no crop)
-           - no squeezing/stretching
-        ============================================= */
+        /* ══════════════════════════════════════════════════════════════════
+           RIGHT IMAGE — same width, but capped height so section is shorter
+           and image starts opposite the top of content.
+        ══════════════════════════════════════════════════════════════════ */
         .results-side {
-          height: 100%;
-          display: flex;
-        }
-
-        .results-side-img-wrap {
           position: relative;
           width: 100%;
-          height: 100%;
-          border-radius: 10px;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(0,0,0,0.10);
-          border: 1px solid rgba(255,255,255,0.10);
-          box-shadow: 0 18px 50px rgba(0,0,0,0.30);
-          padding: 14px; /* ✅ breathing room so it doesn't touch edges */
+          align-self: start; /* ensure top aligned with lists */
         }
 
         .results-side-img {
-          width: 100%;
-          height: 100%;
-          display: block;
+  display: block;
+  width: 100%;
+  height: auto;           /* keep natural aspect ratio */
+  max-height: 360px;      /* keeps section shorter */
+  object-fit: contain;    /* prevent zoom / crop */
+  object-position: center center;
+  border-radius: 6px;
+}
 
-          /* ✅ FULLY VISIBLE, never cropped */
-          object-fit: contain;
-          object-position: center;
-        }
-
-        /* Left-edge fade blending into bg */
-        .results-side-img-fade {
+        .results-side-fade {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to right, rgba(18,4,4,0.22) 0%, transparent 38%);
+          border-radius: 6px;
+          background:
+            linear-gradient(to right,  rgba(12,2,2,0.26) 0%, transparent 28%),
+            linear-gradient(to top,    rgba(12,2,2,0.22) 0%, transparent 22%),
+            linear-gradient(to left,   rgba(12,2,2,0.12) 0%, transparent 20%);
           pointer-events: none;
         }
 
-        /* =============================================
-           TABLET: 768px – 1023px
-        ============================================= */
+        /* ══════════════════════════════════════════════════════════════════
+           TABLET
+        ══════════════════════════════════════════════════════════════════ */
         @media (min-width: 768px) and (max-width: 1023px) {
           .results-inner {
-            grid-template-columns: 1fr 42%;
-            gap: 36px;
-            padding: 48px 20px;
-          }
+            grid-template-columns: 1fr 44%;
+            gap: 32px;
 
-          .results-side-img-wrap {
-            padding: 12px;
-          }
-        }
-
-        /* =============================================
-           MOBILE: < 768px — stack vertically
-        ============================================= */
-        @media (max-width: 767px) {
-          .results-inner {
-            grid-template-columns: 1fr;
-            gap: 28px;
-            padding: 40px 20px 44px;
-          }
-
-          /* keep bg visible but safe readability */
-          .results-bg-overlay {
-            background: rgba(16, 4, 4, 0.55);
-          }
-
-          /* image below lists, fixed height, still fully visible */
-          .results-side-img-wrap {
-            height: 260px;
-            padding: 10px;
+            /* ↓ reduce further */
+            padding: 32px 24px;
           }
 
           .results-side-img {
-            width: 100%;
-            height: 100%;
+            max-height: 320px;
           }
 
-          .results-list-title {
-            font-size: clamp(16px, 4.5vw, 20px);
-          }
-
-          .results-list-item {
-            font-size: 0.85rem;
-          }
-
-          .results-lists {
-            gap: 28px;
-          }
+          .results-list-title { font-size: clamp(14px, 2vw, 18px); }
+          .results-list-item  { font-size: 0.8rem; }
         }
 
-        /* =============================================
-           SMALL MOBILE: < 420px
-        ============================================= */
-        @media (max-width: 420px) {
+        /* ══════════════════════════════════════════════════════════════════
+           MOBILE — stack, keep height compact
+        ══════════════════════════════════════════════════════════════════ */
+        @media (max-width: 767px) {
           .results-inner {
-            padding: 32px 16px 36px;
+            grid-template-columns: 1fr;
+            gap: 22px;
+
+            /* ↓ reduced from 36/20/40 */
+            padding: 28px 20px 30px;
           }
 
-          .results-side-img-wrap {
-            height: 220px;
+          .results-bg-overlay {
+            background: rgba(12, 2, 2, 0.44);
           }
 
-          .results-list-item {
-            font-size: 0.82rem;
+          .results-side-img {
+            max-height: none;     /* allow natural on mobile */
+            border-radius: 10px;
           }
+
+          .results-list-title { font-size: clamp(15px, 4.5vw, 19px); }
+          .results-list-item  { font-size: 0.82rem; }
+          .results-lists      { gap: 22px; }
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           SMALL MOBILE
+        ══════════════════════════════════════════════════════════════════ */
+        @media (max-width: 420px) {
+          .results-inner { padding: 24px 16px 26px; }
+          .results-list-item { font-size: 0.8rem; }
         }
       `}</style>
     </section>

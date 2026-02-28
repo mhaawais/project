@@ -1,21 +1,55 @@
-import { motion } from 'framer-motion';
-import { FadeIn } from '@/components/animations/FadeIn';
-import { StaggerContainer, StaggerItem } from '@/components/animations/StaggerContainer';
-import { Check } from 'lucide-react';
+import { motion } from "framer-motion";
+import { FadeIn } from "@/components/animations/FadeIn";
+import {
+  StaggerContainer,
+  StaggerItem,
+} from "@/components/animations/StaggerContainer";
 
 const facts = [
-  'Hacked my first computer before I could legally drive',
-  'Lived on both sides of complex systems, inside enterprise and outside it',
+  "Hacked my first computer before I could legally drive",
+  "Lived on both sides of complex systems, inside enterprise and outside it",
   "Obsessed with building things, whether it's tech or perfecting my BBQ smoker",
   "I believe in leaving things better, unless you're algae on my boat (sorry, no mercy!)",
 ];
 
+// Figma: small red rounded-square box with white checkmark inside
+function CheckMark({ size = 30 }: { size?: number }) {
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        minWidth: size,
+        borderRadius: "4px",
+        background: "#3A1212", // dark maroon background
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+      }}
+    >
+      <svg
+        width={size * 0.75}
+        height={size * 0.75}
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          d="M6 12L10 16L18 8"
+          stroke="#C0392B"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  );
+}
 export function BeyondBioSection() {
   return (
     <section className="bio-section">
       <div className="bio-container">
         <div className="bio-grid">
-
           {/* ── LEFT: Title + checklist ── */}
           <div className="bio-left">
             <FadeIn>
@@ -29,12 +63,10 @@ export function BeyondBioSection() {
                 <StaggerItem key={i}>
                   <motion.div
                     className="bio-fact"
-                    whileHover={{ x: 4 }}
-                    transition={{ duration: 0.2 }}
+                    whileHover={{ x: 3 }}
+                    transition={{ duration: 0.18 }}
                   >
-                    <div className="bio-check-wrap">
-                      <Check className="bio-check-icon" />
-                    </div>
+                    <CheckMark />
                     <p className="bio-fact-text">{fact}</p>
                   </motion.div>
                 </StaggerItem>
@@ -42,68 +74,108 @@ export function BeyondBioSection() {
             </StaggerContainer>
           </div>
 
-          {/* ── RIGHT: Staggered 3-image collage cards ── */}
+          {/* ── RIGHT: 3-image staggered collage ── */}
           <FadeIn direction="right">
             <div className="bio-collage">
+              {/*
+                FIGMA LAYOUT (carefully measured):
+                ─────────────────────────────────────────────────
+                Collage total: ~100% wide, ~320px tall
 
-              {/* Large bottom-left card */}
+                [img1 — large, left+top, ~58% wide, ~72% tall]
+                  sits at: left=0, top=0
+                  shows: tech/office/server room scene
+
+                [img2 — portrait, right side, ~44% wide, ~62% tall]
+                  sits at: right=0, top=0
+                  has a BLUE/TEAL 2px border
+                  overlaps img1 on the left edge
+
+                [img3 — boat, small, bottom-right, ~44% wide, ~36% tall]
+                  sits at: right=0, bottom=0
+                  overlaps img2 slightly at top
+                  z-index above img1, below img2
+                ─────────────────────────────────────────────────
+              */}
+
+              {/* img1 — Large tech/office scene, top-left */}
               <div className="bio-card bio-card--large">
-                <img src="/images/beyond-1.png" alt="" className="bio-card-img" />
+                <img
+                  src="/images/beyond-1.png"
+                  alt="Tech workspace"
+                  className="bio-card-img"
+                />
               </div>
 
-              {/* Top-right card — elevated/overlapping */}
-              <div className="bio-card bio-card--top-right">
-                <img src="/images/beyond-2.png" alt="" className="bio-card-img" />
+              {/* img2 — Standing portrait, top-right, WITH blue border */}
+              <div className="bio-card bio-card--portrait">
+                <img
+                  src="/images/beyond-2.png"
+                  alt="Professional portrait"
+                  className="bio-card-img"
+                />
               </div>
 
-              {/* Bottom-right card */}
-              <div className="bio-card bio-card--bottom-right">
-                <img src="/images/beyond-3.png" alt="" className="bio-card-img" />
-              </div>
+              {/* img3 — Boat scene, bottom-right */}
 
+              <div className="bio-card bio-card--boat">
+                <img
+                  src="/images/beyond-3.png"
+                  alt="Boat on water"
+                  className="bio-card-img"
+                />
+              </div>
             </div>
           </FadeIn>
-
         </div>
       </div>
 
       <style>{`
-        /* ── Section: rich deep red gradient ── */
+
+        /* ══════════════════════════════════════════════════════════
+           SECTION BG
+           Figma: strong deep maroon/crimson on left, fades to near-black
+        ══════════════════════════════════════════════════════════ */
         .bio-section {
-          background: radial-gradient(
-            ellipse 130% 90% at 10% 50%,
-            #3a0606 0%,
-            #250202 30%,
-            #160101 60%,
-            #080000 100%
-          );
-          padding: 68px 0 72px;
+          background:
+            radial-gradient(
+              ellipse 80% 110% at 5% 45%,
+              #3d0808 0%,
+              #280404 28%,
+              #250707 55%,
+              #220404 100%
+            );
+          padding: 60px 0 66px;
           overflow: hidden;
         }
 
         .bio-container {
-          max-width: 1200px;
+          max-width: 1160px;
           margin: 0 auto;
           padding: 0 48px;
         }
 
-        /* 45/55 split */
+        /* ══════════════════════════════════════════════════════════
+           GRID — 45% left / 55% right
+        ══════════════════════════════════════════════════════════ */
         .bio-grid {
           display: grid;
           grid-template-columns: 45% 55%;
-          gap: 48px;
+          gap: 36px;
           align-items: center;
         }
 
-        /* ── LEFT ── */
+        /* ══════════════════════════════════════════════════════════
+           LEFT
+        ══════════════════════════════════════════════════════════ */
         .bio-left {
           display: flex;
           flex-direction: column;
-          gap: 28px;
+          gap: 24px;
         }
 
         .bio-heading {
-          font-size: clamp(26px, 3vw, 44px);
+          font-size: clamp(24px, 2.8vw, 40px);
           font-weight: 800;
           color: #ffffff;
           margin: 0;
@@ -111,140 +183,180 @@ export function BeyondBioSection() {
           letter-spacing: -0.02em;
         }
 
-        .bio-accent {
-          color: #c0392b;
-        }
+        .bio-accent { color: #c0392b; }
 
         .bio-list {
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 16px;
         }
 
         .bio-fact {
           display: flex;
           align-items: flex-start;
-          gap: 13px;
-        }
-
-        .bio-check-wrap {
-          width: 22px;
-          height: 22px;
-          border-radius: 4px;
-          background: rgba(192, 57, 43, 0.2);
-          border: 1px solid rgba(192, 57, 43, 0.55);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          margin-top: 2px;
-        }
-
-        .bio-check-icon {
-          width: 12px;
-          height: 12px;
-          color: #c0392b;
-          stroke-width: 3;
+          gap: 11px;
         }
 
         .bio-fact-text {
-          font-size: clamp(13px, 1vw, 15px);
+          font-size: clamp(12px, 0.92vw, 13.5px);
           color: #c0a8a8;
-          line-height: 1.7;
+          line-height: 1.68;
           margin: 0;
         }
 
-        /* ── RIGHT: stacked card collage ── */
-        .bio-collage {
-          position: relative;
-          width: 100%;
-          /* height driven by content — roughly matches screenshot proportions */
-          height: 420px;
-        }
+        /* ══════════════════════════════════════════════════════════
+           COLLAGE
+           Height: 320px desktop
+           All cards use absolute positioning
+        ══════════════════════════════════════════════════════════ */
+      /* ===============================
+   COLLAGE (images) — UPDATED CSS
+   Fixes:
+   ✅ images clearer (very light overlay)
+   ✅ img-2 (portrait) fully visible + always on top
+   ✅ correct staggering + different sizes + overlaps
+================================ */
 
-        /* Each card: #230101 background + padding + rounded */
-        .bio-card {
-          position: absolute;
-          background: #230101;
-          border-radius: 14px;
-          padding: 10px;
-          box-shadow:
-            0 8px 32px rgba(0,0,0,0.6),
-            0 2px 8px rgba(0,0,0,0.4);
-        }
+.bio-collage {
+  position: relative;
+  width: 100%;
+  height: 360px;
+}
 
-        .bio-card-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          display: block;
-          border-radius: 8px;
-        }
+/* Base card */
+.bio-card {
+  position: absolute;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+}
 
-        /* Large card: left side, most of the height */
-        .bio-card--large {
-          left: 0;
-          top: 30px;
-          width: 58%;
-          height: 340px;
-          z-index: 2;
-        }
+/* Image */
+.bio-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
 
-        /* Top-right card: overlaps large card, sits higher */
-        .bio-card--top-right {
-          right: 0;
-          top: 0;
-          width: 42%;
-          height: 200px;
-          z-index: 3;
-        }
+/* VERY LIGHT overlay only (keeps images crisp) */
+.bio-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.06); /* make 0.04 for even clearer */
+}
 
-        /* Bottom-right card: below top-right */
-        .bio-card--bottom-right {
-          right: 0;
-          bottom: 0;
-          width: 44%;
-          height: 190px;
-          z-index: 2;
-        }
+/* ─────────────────────────────
+   beyond-3 (BOAT) → LEFT
+───────────────────────────── */
+.bio-card--boat {
+  left: 0;
+  top: 70px;
+  width: 48%;
+  height: 62%;
+  z-index: 1;
+}
 
-        /* ── Tablet ── */
+/* ─────────────────────────────
+   beyond-2 (PORTRAIT) → TOP-CENTER (always visible)
+───────────────────────────── */
+.bio-card--portrait {
+  left: 38%;
+  top: 0;
+  width: 42%;
+  height: 48%;
+  z-index: 5; /* highest layer */
+}
+
+/* Slightly less overlay on portrait (even clearer) */
+.bio-card--portrait::after {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* ─────────────────────────────
+   beyond-1 (LARGE) → BOTTOM-RIGHT
+───────────────────────────── */
+.bio-card--large {
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  height: 60%;
+  z-index: 2;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .bio-collage { height: 320px; }
+
+  .bio-card--boat      { top: 62px; width: 50%; height: 62%; }
+  .bio-card--portrait  { left: 40%; width: 44%; height: 46%; }
+  .bio-card--large     { width: 56%; height: 58%; }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .bio-collage { height: 280px; }
+
+  .bio-card--boat      { top: 58px; width: 56%; height: 62%; }
+  .bio-card--portrait  { left: 44%; width: 52%; height: 44%; }
+  .bio-card--large     { width: 66%; height: 56%; }
+}
+
+/* Small Mobile */
+@media (max-width: 420px) {
+  .bio-collage { height: 240px; }
+
+  .bio-card--boat      { top: 52px; }
+  .bio-card--portrait  { left: 42%; width: 54%; }
+  .bio-card--large     { width: 68%; }
+}
+
+
+
+
+
+
+        /* ══════════════════════════════════════════════════════════
+           TABLET: 768–1023px
+        ══════════════════════════════════════════════════════════ */
         @media (min-width: 768px) and (max-width: 1023px) {
-          .bio-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 32px;
-          }
-          .bio-container { padding: 0 28px; }
-          .bio-collage { height: 340px; }
-          .bio-card--large { height: 270px; }
-          .bio-card--top-right { height: 160px; }
-          .bio-card--bottom-right { height: 150px; }
+          .bio-section    { padding: 48px 0 54px; }
+          .bio-container  { padding: 0 28px; }
+          .bio-grid       { grid-template-columns: 1fr 1fr; gap: 24px; }
+          .bio-collage    { height: 280px; }
+          .bio-heading    { font-size: clamp(20px, 3vw, 32px); }
+          .bio-fact-text  { font-size: 0.84rem; }
         }
 
-        /* ── Mobile ── */
+        /* ══════════════════════════════════════════════════════════
+           MOBILE: <768px
+        ══════════════════════════════════════════════════════════ */
         @media (max-width: 767px) {
-          .bio-section { padding: 48px 0; }
-          .bio-container { padding: 0 20px; }
-          .bio-grid {
-            grid-template-columns: 1fr;
-            gap: 36px;
-          }
-          .bio-heading { font-size: 1.75rem; }
-          .bio-fact-text { font-size: 0.9rem; }
-          .bio-collage { height: 300px; }
-          .bio-card--large { height: 230px; top: 20px; }
-          .bio-card--top-right { height: 140px; width: 44%; }
-          .bio-card--bottom-right { height: 130px; width: 44%; }
+          .bio-section    { padding: 40px 0 46px; }
+          .bio-container  { padding: 0 18px; }
+          .bio-grid       { grid-template-columns: 1fr; gap: 30px; }
+          .bio-heading    { font-size: clamp(22px, 6vw, 30px); }
+          .bio-fact-text  { font-size: 0.875rem; }
+          .bio-list       { gap: 14px; }
+          .bio-collage    { height: 260px; }
         }
 
-        /* ── Small mobile ── */
+        /* ══════════════════════════════════════════════════════════
+           SMALL MOBILE: <420px
+        ══════════════════════════════════════════════════════════ */
         @media (max-width: 420px) {
-          .bio-container { padding: 0 16px; }
-          .bio-heading { font-size: 1.5rem; }
-          .bio-collage { height: 250px; }
-          .bio-card--large { height: 190px; }
-          .bio-card--top-right { height: 115px; }
-          .bio-card--bottom-right { height: 110px; }
+          .bio-container  { padding: 0 14px; }
+          .bio-collage    { height: 220px; }
+          .bio-heading    { font-size: 1.35rem; }
+          .bio-fact-text  { font-size: 0.82rem; }
         }
       `}</style>
     </section>

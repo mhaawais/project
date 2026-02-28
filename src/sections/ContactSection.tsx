@@ -165,9 +165,9 @@ export function ContactSection() {
           padding: 90px 0;
           background: radial-gradient(
             ellipse 90% 70% at 50% 0%,
-            #3a1010 0%,
-            #240808 45%,
-            #140404 100%
+            #3a1010 30%,
+            #1a0606 45%,
+            #360b0b 100%
           );
         }
 
@@ -263,13 +263,13 @@ export function ContactSection() {
         .rv-contact-card {
           border-radius: 16px;
           padding: 26px 26px 24px;
-          border: 1px solid rgba(255, 255, 255, 0.12);
+          border: 0.3px solid #740909;
           background: linear-gradient(
             to bottom,
-            rgba(255, 255, 255, 0.09),
+            rgba(219, 184, 184, 0.09),
             rgba(255, 255, 255, 0.05)
           );
-          box-shadow: 0 18px 55px rgba(0, 0, 0, 0.38);
+          box-shadow: 0 18px 55px rgba(58, 38, 38, 0.38);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
         }
@@ -277,8 +277,8 @@ export function ContactSection() {
         .rv-contact-card-title {
           margin: 0 0 18px;
           color: #ffffff;
-          font-weight: 700;
-          font-size: 18px;
+          font-weight: 800;
+          font-size: 28px;
           letter-spacing: -0.01em;
         }
 
@@ -297,7 +297,7 @@ export function ContactSection() {
         .rv-label {
           display: block;
           margin: 0 0 8px;
-          color: rgba(240, 230, 230, 0.85);
+          color: rgba(255, 255, 255, 0.85);
           font-size: 12px;
         }
 
@@ -307,7 +307,7 @@ export function ContactSection() {
           border-radius: 10px;
           padding: 12px 14px;
           border: 1px solid rgba(255, 255, 255, 0.14);
-          background: rgba(0, 0, 0, 0.20); /* lighter input bg like screenshot */
+          background: rgba(97, 82, 82, 0.2); /* lighter input bg like screenshot */
           color: #ffffff;
           font-size: 13px;
           outline: none;
