@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight } from 'lucide-react';
-import { Logo } from '@/components/shared/Logo';
-import { cn } from '@/lib/utils';
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Speaking & Media', href: '#speaking' },
-  { label: 'VDV Labs', href: '#services' },
-  { label: 'Contact', href: '#contact' },
+  { label: "About", href: "#about" },
+  { label: "Speaking & Media", href: "#speaking" },
+  { label: "VDV Labs", href: "#services" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function Navbar() {
@@ -20,8 +19,8 @@ export function Navbar() {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -31,17 +30,23 @@ export function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? 'bg-rv-bg/90 backdrop-blur-xl border-b border-rv-border'
-            : 'bg-transparent'
+            ? "bg-rv-bg/90 backdrop-blur-xl border-b border-rv-border"
+            : "bg-transparent",
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-[72px]">
-            {/* Logo */}
-            <a href="#">
-              <Logo />
+            <a href="#" className="relative">
+              <img
+                src="/images/Frame-header.png"
+                alt="Brand Alchemy - Robert Vandervoort"
+                width={180}
+                height={40}
+                sizes="180px"
+                className="h-auto w-auto"
+              />
             </a>
 
             {/* Desktop Navigation */}
@@ -62,7 +67,7 @@ export function Navbar() {
             <div className="hidden md:block">
               <motion.a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-transparent border border-rv-border text-white text-sm font-medium rounded-md hover:border-rv-accent transition-colors duration-200"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-rv-border text-black text-sm font-medium rounded-md hover:border-rv-accent transition-colors duration-200"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -76,7 +81,11 @@ export function Navbar() {
               className="md:hidden text-white p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
@@ -105,7 +114,7 @@ export function Navbar() {
               ))}
               <a
                 href="#contact"
-                className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-rv-accent text-white font-medium rounded-md"
+                className="mt-4 inline-flex items-center gap-2 px-6 py-3 bg-[#932a1c] text-white font-medium rounded-md"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Book to Speak

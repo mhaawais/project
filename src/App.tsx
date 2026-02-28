@@ -2,6 +2,7 @@ import { Navbar } from '@/sections/Navbar';
 import { HeroSection } from '@/sections/HeroSection';
 import { AboutSection } from '@/sections/AboutSection';
 import { ServicesSection } from '@/sections/ServicesSection';
+import { ServicesSection2 } from '@/sections/ServicesSection2';
 import { ApproachSection } from '@/sections/ApproachSection';
 import { SpeakingSection } from '@/sections/SpeakingSection';
 import { TestimonialsSection } from '@/sections/TestimonialsSection';
@@ -17,6 +18,7 @@ function App() {
         <HeroSection />
         <AboutSection />
         <ServicesSection />
+        <ServicesSection2 />
         <ApproachSection />
         <SpeakingSection />
         <TestimonialsSection />

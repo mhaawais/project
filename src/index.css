@@ -48,3 +48,57 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-rv-accent to-rv-accent-hover;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =============================================
+   CUSTOM SCROLLBAR — matches dark red theme
+   ============================================= */
+
+/* Width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track — deep dark red, matches section backgrounds */
+::-webkit-scrollbar-track {
+  background: #0e0101;
+}
+
+/* Thumb — red accent, rounded */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom,
+    #8a1a1a 0%,
+    #c0392b 50%,
+    #8a1a1a 100%
+  );
+  border-radius: 999px;
+}
+
+/* Thumb hover — brighter red */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom,
+    #c0392b 0%,
+    #e04030 50%,
+    #c0392b 100%
+  );
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c0392b #0e0101;
+}

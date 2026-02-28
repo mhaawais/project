@@ -16,107 +16,348 @@ const whatIDo = [
   'Align strategy with real-world execution',
 ];
 
-const whatClientsGain = [
-  'Clearer, defensible decisions',
-  'Avoidance of expensive missteps',
-  'Governance before growth',
-  'Strategy that survives contact with reality',
-];
-
-const enterpriseResults = [
-  '3 million dollars in enterprise revenue year one',
-  '8 million dollars in enterprise revenue year two',
-  '12 million dollar annual recurring revenue win in complex IoT monitoring',
-  'High proof-of-value win rates on enterprise-scale initiatives',
-  'Production-grade integrations deployed in live environments',
-  'AI and observability initiatives guided under real-world constraints',
-];
-
 export function ServicesSection() {
   return (
-    <section id="services" className="relative py-20 lg:py-32 overflow-hidden">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/business-discussion.jpg"
-          alt=""
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-rv-bg/80" />
+    <section id="services" className="services-section">
+      {/* ── "Ideas" watermark — top right, only in headline area ── */}
+      <div className="services-watermark" aria-hidden="true">
+        <span>Ideas</span>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Headline */}
-        <FadeIn className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-white leading-tight max-w-4xl mx-auto">
-            I Ruin Bad Ideas Early So You Only Invest In What's{' '}
-            <span className="text-rv-accent">Truly Worth Building</span>
-          </h2>
+      <div className="services-inner">
+        {/* Headline — centered, solid dark bg, NO background image here */}
+        <FadeIn>
+          <div className="services-headline-wrap">
+            <h2 className="services-h2">
+              I Ruin Bad Ideas Early So You<br />
+              Only Invest In What&apos;s{' '}
+              <span style={{ color: '#d84a35' }}>Truly Worth Building</span>
+            </h2>
+          </div>
         </FadeIn>
-
-        {/* Content Grid */}
-        <StaggerContainer staggerDelay={0.1} className="grid md:grid-cols-2 gap-8 lg:gap-12">
-          {/* Who I Work With */}
-          <StaggerItem>
-            <div className="bg-rv-bg-secondary/90 backdrop-blur-sm border border-rv-border rounded-xl p-6 lg:p-8">
-              <h3 className="text-xl font-semibold text-white mb-6">Who I Work With</h3>
-              <ul className="space-y-3">
-                {whoIWorkWith.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 bg-rv-accent rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-rv-text-secondary text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </StaggerItem>
-
-          {/* What I Do */}
-          <StaggerItem>
-            <div className="bg-rv-bg-secondary/90 backdrop-blur-sm border border-rv-border rounded-xl p-6 lg:p-8">
-              <h3 className="text-xl font-semibold text-white mb-6">What I Do</h3>
-              <ul className="space-y-3">
-                {whatIDo.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 bg-rv-accent rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-rv-text-secondary text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </StaggerItem>
-
-          {/* What Clients Gain */}
-          <StaggerItem>
-            <div className="bg-rv-bg-secondary/90 backdrop-blur-sm border border-rv-border rounded-xl p-6 lg:p-8">
-              <h3 className="text-xl font-semibold text-white mb-6">What Clients Gain</h3>
-              <ul className="space-y-3">
-                {whatClientsGain.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 bg-rv-accent rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-rv-text-secondary text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </StaggerItem>
-
-          {/* Enterprise Results */}
-          <StaggerItem>
-            <div className="bg-rv-bg-secondary/90 backdrop-blur-sm border border-rv-border rounded-xl p-6 lg:p-8">
-              <h3 className="text-xl font-semibold text-white mb-6">Enterprise Results</h3>
-              <ul className="space-y-3">
-                {enterpriseResults.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 bg-rv-accent rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-rv-text-secondary text-sm">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </StaggerItem>
-        </StaggerContainer>
       </div>
+
+      {/* ── Below the line: bg image starts here (FULL WIDTH) ── */}
+      <div className="services-body-wrap">
+        {/* Background image + overlay ONLY in this block */}
+        <div className="services-bg" aria-hidden="true">
+          <img src="/images/updated.png" alt="" className="services-bg-img" />
+          <div className="services-bg-overlay" />
+          {/* extra soft vignette for readability while keeping image visible */}
+          <div className="services-bg-vignette" />
+        </div>
+
+        {/* Lists grid */}
+        <div className="services-body">
+          {/* Left spacer — image visible here */}
+          <div className="services-left-spacer" />
+
+          {/* Right: stacked lists */}
+          <StaggerContainer staggerDelay={0.1} className="services-lists">
+            <StaggerItem>
+              <div className="services-list-block">
+                <h3 className="services-list-title">Who I Work With</h3>
+                <ul className="services-list">
+                  {whoIWorkWith.map((item, i) => (
+                    <li key={i} className="services-list-item">
+                      <span className="services-bullet" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </StaggerItem>
+
+            <StaggerItem>
+              <div className="services-list-block">
+                <h3 className="services-list-title">What I Do</h3>
+                <ul className="services-list">
+                  {whatIDo.map((item, i) => (
+                    <li key={i} className="services-list-item">
+                      <span className="services-bullet" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </div>
+
+      {/* ── Bottom accent line ── */}
+      <div className="services-bottom-line" />
+
+      <style>{`
+        /* =============================================
+           SECTION — solid dark bg (headline area)
+        ============================================= */
+        .services-section {
+          position: relative;
+          overflow: hidden;
+          background: #0e0202;
+        }
+
+        /* ── "Ideas" watermark — top right of headline area ── */
+        .services-watermark {
+          position: absolute;
+          top: 0;
+          right: -10px;
+          z-index: 3;
+          pointer-events: none;
+          user-select: none;
+          line-height: 1;
+        }
+
+        .services-watermark span {
+          display: block;
+          font-size: clamp(80px, 14vw, 200px);
+          font-weight: 900;
+          color: white;
+          opacity: 0.06;
+          letter-spacing: -0.02em;
+          line-height: 0.85;
+        }
+
+        /* ── Headline inner (constrained) ── */
+        .services-inner {
+          position: relative;
+          z-index: 2;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 56px 24px 0;
+        }
+
+        .services-headline-wrap {
+          text-align: center;
+          padding-bottom: 40px;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .services-h2 {
+          font-size: clamp(24px, 3vw, 42px);
+          font-weight: 800;
+          color: #ffffff;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
+          margin: 0;
+        }
+
+        /* =============================================
+           BODY WRAP — FULL WIDTH background
+        ============================================= */
+        .services-body-wrap {
+          position: relative;
+          width: 100vw;                 /* ✅ full viewport width */
+          left: 50%;
+          right: 50%;
+          margin-left: -50vw;           /* ✅ escape max-width containers */
+          margin-right: -50vw;
+          overflow: hidden;
+        }
+
+        .services-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+        }
+
+        .services-bg-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          display: block;
+          transform: scale(1.03);       /* tiny scale to avoid edge gaps */
+        }
+
+        /* ✅ Increased visibility (less dark) */
+        .services-bg-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to right,
+            rgba(30, 6, 6, 0.42) 0%,
+            rgba(25, 5, 5, 0.50) 45%,
+            rgba(18, 4, 4, 0.62) 100%
+          );
+        }
+
+        /* Keeps edges readable without killing image */
+        .services-bg-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(
+            ellipse 90% 70% at 70% 50%,
+            rgba(0,0,0,0.0) 0%,
+            rgba(0,0,0,0.10) 55%,
+            rgba(0,0,0,0.25) 100%
+          );
+          pointer-events: none;
+        }
+
+        /* =============================================
+           BODY CONTENT — constrained to max width
+        ============================================= */
+        .services-body {
+          position: relative;
+          z-index: 2;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 40px 24px 64px;
+
+          display: grid;
+          grid-template-columns: 44% 1fr;
+          gap: 0;
+          align-items: start;
+        }
+
+        .services-left-spacer {
+          /* intentionally empty: background shows through */
+        }
+
+        .services-lists {
+          display: flex;
+          flex-direction: column;
+          gap: 36px;
+        }
+
+        .services-list-block {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .services-list-title {
+          font-size: clamp(16px, 1.4vw, 20px);
+          font-weight: 700;
+          color: #ffffff;
+          margin: 0;
+          letter-spacing: -0.01em;
+        }
+
+        .services-list {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .services-list-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          color: #e2caca;               /* slightly brighter for new overlay */
+          font-size: 0.82rem;
+          line-height: 1.55;
+        }
+
+        .services-bullet {
+          width: 6px;
+          height: 6px;
+          background: #d84a35;
+          border-radius: 1px;
+          flex-shrink: 0;
+          margin-top: 5px;
+        }
+
+        /* ── Bottom accent line ── */
+        .services-bottom-line {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(
+            to right,
+            transparent 0%,
+            #1a3a6e 30%,
+            #2a5ab0 50%,
+            #1a3a6e 70%,
+            transparent 100%
+          );
+          z-index: 3;
+        }
+
+        /* =============================================
+           TABLET: 768px – 1023px
+        ============================================= */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .services-body {
+            grid-template-columns: 36% 1fr;
+            padding: 36px 20px 56px;
+          }
+
+          .services-inner {
+            padding: 48px 20px 0;
+          }
+
+          .services-h2 {
+            font-size: clamp(22px, 3.5vw, 32px);
+          }
+        }
+
+        /* =============================================
+           MOBILE: < 768px
+        ============================================= */
+        @media (max-width: 767px) {
+          .services-bg-overlay {
+            background: rgba(20, 4, 4, 0.62); /* ✅ still visible, readable */
+          }
+
+          .services-body {
+            grid-template-columns: 1fr;
+            padding: 28px 20px 48px;
+          }
+
+          .services-left-spacer {
+            display: none;
+          }
+
+          .services-inner {
+            padding: 40px 20px 0;
+          }
+
+          .services-headline-wrap {
+            padding-bottom: 32px;
+          }
+
+          .services-h2 {
+            font-size: clamp(20px, 5.5vw, 28px);
+          }
+
+          .services-lists {
+            gap: 28px;
+          }
+
+          .services-list-item {
+            font-size: 0.85rem;
+          }
+
+          .services-watermark span {
+            font-size: clamp(60px, 20vw, 120px);
+          }
+        }
+
+        /* =============================================
+           SMALL MOBILE: < 420px
+        ============================================= */
+        @media (max-width: 420px) {
+          .services-inner {
+            padding: 32px 16px 0;
+          }
+
+          .services-body {
+            padding: 24px 16px 40px;
+          }
+
+          .services-list-item {
+            font-size: 0.82rem;
+          }
+        }
+      `}</style>
     </section>
   );
 }
