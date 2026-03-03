@@ -98,33 +98,14 @@ export function BeyondBioSection() {
                 ─────────────────────────────────────────────────
               */}
 
-              {/* img1 — Large tech/office scene, top-left */}
-              <div className="bio-card bio-card--large">
-                <img
-                  src="/images/beyond-1.png"
-                  alt="Tech workspace"
-                  className="bio-card-img"
-                />
-              </div>
-
-              {/* img2 — Standing portrait, top-right, WITH blue border */}
-              <div className="bio-card bio-card--portrait">
-                <img
-                  src="/images/beyond-2.png"
-                  alt="Professional portrait"
-                  className="bio-card-img"
-                />
-              </div>
-
-              {/* img3 — Boat scene, bottom-right */}
-
-              <div className="bio-card bio-card--boat">
-                <img
-                  src="/images/beyond-3.png"
-                  alt="Boat on water"
-                  className="bio-card-img"
-                />
-              </div>
+             {/* Single collage image */}
+<div className="bio-card bio-card--single">
+  <img
+    src="/images/photo-collage-5.png"
+    alt="Photo collage"
+    className="bio-card-img"
+  />
+</div>
             </div>
           </FadeIn>
         </div>
@@ -318,9 +299,6 @@ export function BeyondBioSection() {
   .bio-card--portrait  { left: 42%; width: 54%; }
   .bio-card--large     { width: 68%; }
 }
-
-
-
 
 
 

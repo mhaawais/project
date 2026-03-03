@@ -145,26 +145,17 @@ export function SpeakingSection() {
   text-align: center;
   padding: 60px 24px 50px;
 
-  /* TOP background you can control */
   background:
-    /* Glow 1 (move it with at X% Y%) */
     radial-gradient(
-      ellipse 70% 60% at 50% 30%,
-      rgba(151, 43, 28, 0.28) 0%,
-      rgba(151, 43, 28, 0.14) 38%,
+      ellipse 60% 80% at 50% 50%,
+      rgba(66, 15, 9, 0.35) 0%,
+      rgba(80, 12, 8, 0.2) 40%,
       transparent 70%
     ),
-    /* Glow 2 (optional, adds depth) */
     radial-gradient(
-      ellipse 65% 55% at 20% 60%,
-      rgba(255, 255, 255, 0.05) 0%,
-      transparent 60%
-    ),
-    /* Base dark */
-    radial-gradient(
-      ellipse 85% 85% at 50% 35%,
-      #1e0808 0%,
-      #110303 55%,
+      ellipse 100% 100% at 50% 50%,
+      #1e0606 0%,
+      #130303 45%,
       #0a0101 100%
     );
 }

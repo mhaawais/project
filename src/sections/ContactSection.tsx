@@ -266,8 +266,8 @@ export function ContactSection() {
           border: 0.3px solid #740909;
           background: linear-gradient(
             to bottom,
-            rgba(219, 184, 184, 0.09),
-            rgba(255, 255, 255, 0.05)
+            rgba(180, 141, 141, 0.09),
+            rgba(233, 194, 194, 0.05)
           );
           box-shadow: 0 18px 55px rgba(58, 38, 38, 0.38);
           backdrop-filter: blur(10px);
@@ -307,7 +307,7 @@ export function ContactSection() {
           border-radius: 10px;
           padding: 12px 14px;
           border: 1px solid rgba(255, 255, 255, 0.14);
-          background: rgba(97, 82, 82, 0.2); /* lighter input bg like screenshot */
+          background: rgba(128, 111, 111, 0.2); /* lighter input bg like screenshot */
           color: #ffffff;
           font-size: 13px;
           outline: none;
@@ -316,7 +316,7 @@ export function ContactSection() {
 
         .rv-input::placeholder,
         .rv-textarea::placeholder {
-          color: rgba(240, 230, 230, 0.48);
+          color: rgba(245, 240, 240, 0.48);
         }
 
         .rv-input:focus,

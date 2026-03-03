@@ -58,7 +58,7 @@ export function HeroSection() {
            SECTION
            Figma background — THREE layered zones:
              Zone A (upper-right):  bright crimson #7a1212  → face glow area
-             Zone B (lower-left):   warm dark red  #5a0d0d  → behind text content
+             Zone B (lower-left):   warm dark red  #aa1f1f  → behind text content
              Zone C (everywhere else): near-black  #0b0101
            Achieved with two radial-gradient layers stacked.
         ══════════════════════════════════════════════════════════════════ */
@@ -69,18 +69,18 @@ export function HeroSection() {
           background:
             /* Zone B — warm red glow behind/below text block (lower-left) */
             radial-gradient(
-              ellipse 52% 50% at 16% 78%,
-              rgba(105, 14, 14, 0.2) 40%,
-              rgba(56, 5, 5, 0.5)  42%,
+              ellipse 52% 50% at 26% 48%,
+              rgba(131, 24, 24, 0.2) 10%,
+              rgba(49, 7, 7, 0.5)  62%,
               transparent 68%
             ),
             /* Zone A — main portrait/face glow (upper-right) */
             radial-gradient(
               ellipse 62% 68% at 84% 20%,
-              #7a1212  0%,
-              #4a0a0a  30%,
-              #1c0404  56%,
-              #0b0101  100%
+              #5f0f0f  0%,
+              #4a0a0a  7%,
+              #330505  6%,
+              #290404  40%
             );
         }
 

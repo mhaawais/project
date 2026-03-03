@@ -119,21 +119,19 @@ export function ServicesSection() {
   overflow: hidden;
 
   background:
-    /* Light red overlay glow */
-    radial-gradient(
-      ellipse 65% 75% at 50% 45%,
-      rgba(151, 43, 28, 0.28) 0%,
-      rgba(151, 43, 28, 0.18) 35%,
-      transparent 70%
-    ),
+  radial-gradient(
+    ellipse 55% 65% at 14% 52%,
+    rgba(66, 14, 14, 0.15) 0%,
+    rgba(45, 8, 8, 0.25) 44%,
+    transparent 70%
+  ),
+  radial-gradient(
+    ellipse 88% 92% at 52% 50%,
+    #1d0303 0%,
+    #190202 26%,
+    #150202 100%
+  );
 
-    /* Base dark gradient */
-    radial-gradient(
-      ellipse 70% 90% at 50% 50%,
-      #1c0808 0%,
-      #110303 55%,
-      #0b0101 100%
-    );
 
   padding: 52px 24px 44px;
   text-align: center;
