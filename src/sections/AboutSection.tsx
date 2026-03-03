@@ -22,13 +22,14 @@ export function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <img
-              src="/images/businessman-silhouette.png"
-              alt="Business leader on stage"
-              className="about-img"
-            />
-            {/* Right-edge fade to blend into card bg */}
-            <div className="about-img-fade" />
+            {/* Inset frame — same vertical padding as text column, small gap on right to breathe */}
+            <div className="about-img-frame">
+              <img
+                src="/images/businessman-silhouette.png"
+                alt="Business leader on stage"
+                className="about-img"
+              />
+            </div>
           </motion.div>
 
           {/* ── Right: Content column ── */}
@@ -137,14 +138,25 @@ export function AboutSection() {
 
         /* ══════════════════════════════════════════════════════════
            IMAGE COLUMN
-           Image fills entire left column — no inset/frame/margin
+           Outer col: same padding as .about-content so top/bottom
+           space is visually identical on both sides of the card.
         ══════════════════════════════════════════════════════════ */
         .about-img-col {
+          /* Mirror text column padding: 44px top/bottom, 20px left, 20px right gap toward divider */
+          padding: 44px 20px 44px 44px;
+          display: flex;
+          align-items: stretch;
+        }
+
+        /* Inset frame: rounds the image, clips it, fills remaining height */
+        .about-img-frame {
           position: relative;
+          flex: 1;
+          border-radius: 10px;
           overflow: hidden;
-          /* Slightly darker bg so the image base blends */
+          /* Slightly darker bg shows through contain letterbox if any */
           background: #0c0202;
-          min-height: 420px;
+          min-height: 320px;
         }
 
         .about-img {
@@ -154,26 +166,8 @@ export function AboutSection() {
           height: 100%;
           display: block;
           object-fit: cover;
-          object-position: center center;
-        }
-
-        /* Gradient overlay: fades right edge into card bg */
-        .about-img-fade {
-          position: absolute;
-          inset: 0;
-          background:
-            linear-gradient(
-              to right,
-              transparent 55%,
-              rgba(22, 7, 7, 0.55) 80%,
-              rgba(20, 6, 6, 0.88) 100%
-            ),
-            linear-gradient(
-              to top,
-              rgba(12, 2, 2, 0.50) 0%,
-              transparent 15%
-            );
-          pointer-events: none;
+          object-position: center top;
+          border-radius: 10px;
         }
 
         /* ══════════════════════════════════════════════════════════
@@ -217,71 +211,76 @@ export function AboutSection() {
            LARGE DESKTOP ≥ 1280px
         ══════════════════════════════════════════════════════════ */
         @media (min-width: 1280px) {
-          .about-outer            { max-width: 920px; }
-          .about-card             { grid-template-columns: 42% 1fr; }
-          .about-content          { padding: 50px 50px 50px 40px; }
-          .about-h2               { font-size: 34px; }
+          .about-outer   { max-width: 920px; }
+          .about-card    { grid-template-columns: 42% 1fr; }
+          /* Both sides share same 50px top/bottom padding */
+          .about-img-col { padding: 50px 22px 50px 50px; }
+          .about-content { padding: 50px 50px 50px 36px; }
+          .about-h2      { font-size: 34px; }
         }
 
         /* ══════════════════════════════════════════════════════════
            TABLET LANDSCAPE 1024–1279px
         ══════════════════════════════════════════════════════════ */
         @media (min-width: 1024px) and (max-width: 1279px) {
-          .about-outer            { max-width: 860px; }
-          .about-section          { padding: 50px 32px; }
-          .about-card             { grid-template-columns: 43% 1fr; }
-          .about-content          { padding: 38px 38px 38px 32px; }
+          .about-outer   { max-width: 860px; }
+          .about-section { padding: 50px 32px; }
+          .about-card    { grid-template-columns: 43% 1fr; }
+          .about-img-col { padding: 38px 18px 38px 38px; }
+          .about-content { padding: 38px 38px 38px 32px; }
         }
 
         /* ══════════════════════════════════════════════════════════
            TABLET PORTRAIT 768–1023px
         ══════════════════════════════════════════════════════════ */
         @media (min-width: 768px) and (max-width: 1023px) {
-          .about-section          { padding: 40px 24px; }
-          .about-outer            { max-width: 720px; }
-          .about-card             { grid-template-columns: 44% 1fr; }
-          .about-img-col          { min-height: 360px; }
-          .about-content          { padding: 30px 28px 30px 24px; }
-          .about-h2               { font-size: clamp(20px, 3vw, 28px); margin-bottom: 16px; }
-          .about-para             { font-size: 0.83rem; line-height: 1.68; margin-bottom: 13px; }
+          .about-section { padding: 40px 24px; }
+          .about-outer   { max-width: 720px; }
+          .about-card    { grid-template-columns: 44% 1fr; }
+          .about-img-col { padding: 28px 16px 28px 28px; }
+          .about-img-frame { min-height: 280px; border-radius: 8px; }
+          .about-img     { border-radius: 8px; }
+          .about-content { padding: 28px 24px 28px 20px; }
+          .about-h2      { font-size: clamp(20px, 3vw, 28px); margin-bottom: 16px; }
+          .about-para    { font-size: 0.83rem; line-height: 1.68; margin-bottom: 13px; }
         }
 
         /* ══════════════════════════════════════════════════════════
            MOBILE < 768px — single column, image on top
         ══════════════════════════════════════════════════════════ */
         @media (max-width: 767px) {
-          .about-section          { padding: 28px 16px; min-height: unset; }
-          .about-card             { grid-template-columns: 1fr; border-radius: 12px; }
-          .about-img-col          { min-height: 280px; height: 280px; }
-          .about-img              { object-position: center top; }
-          /* On mobile fade bottom */
-          .about-img-fade         {
-            background: linear-gradient(to bottom, transparent 50%, rgba(18, 5, 5, 0.88) 100%);
-          }
-          .about-content          { padding: 24px 22px 30px; }
-          .about-h2               { font-size: clamp(20px, 5.5vw, 26px); margin-bottom: 14px; }
-          .about-para             { font-size: 0.84rem; line-height: 1.68; margin-bottom: 13px; }
+          .about-section { padding: 28px 16px; min-height: unset; }
+          .about-card    { grid-template-columns: 1fr; border-radius: 12px; }
+          /* On mobile: image col has padding on sides + top, no bottom (content follows) */
+          .about-img-col { padding: 16px 16px 0 16px; }
+          .about-img-frame { min-height: 260px; border-radius: 8px; }
+          .about-img     { object-position: center top; border-radius: 8px; }
+          .about-content { padding: 20px 20px 28px; }
+          .about-h2      { font-size: clamp(20px, 5.5vw, 26px); margin-bottom: 14px; }
+          .about-para    { font-size: 0.84rem; line-height: 1.68; margin-bottom: 13px; }
         }
 
         /* ══════════════════════════════════════════════════════════
            SMALL MOBILE < 480px
         ══════════════════════════════════════════════════════════ */
         @media (max-width: 480px) {
-          .about-section          { padding: 20px 12px; }
-          .about-img-col          { height: 240px; min-height: 240px; }
-          .about-content          { padding: 20px 16px 24px; }
-          .about-h2               { font-size: clamp(18px, 5.5vw, 22px); }
-          .about-para             { font-size: 0.82rem; }
+          .about-section { padding: 20px 12px; }
+          .about-img-col { padding: 12px 12px 0 12px; }
+          .about-img-frame { min-height: 220px; border-radius: 6px; }
+          .about-img     { border-radius: 6px; }
+          .about-content { padding: 16px 16px 24px; }
+          .about-h2      { font-size: clamp(18px, 5.5vw, 22px); }
+          .about-para    { font-size: 0.82rem; }
         }
 
         /* ══════════════════════════════════════════════════════════
            VERY SMALL < 360px
         ══════════════════════════════════════════════════════════ */
         @media (max-width: 360px) {
-          .about-img-col          { height: 200px; min-height: 200px; }
-          .about-content          { padding: 16px 14px 20px; }
-          .about-h2               { font-size: 18px; }
-          .about-para             { font-size: 0.8rem; }
+          .about-img-frame { min-height: 190px; }
+          .about-content   { padding: 14px 14px 20px; }
+          .about-h2        { font-size: 18px; }
+          .about-para      { font-size: 0.8rem; }
         }
 
       `}</style>
