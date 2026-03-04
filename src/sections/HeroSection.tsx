@@ -1,319 +1,169 @@
 import { motion, type Variants } from "framer-motion";
 
-// ─── Buttons ───────────────────────────────────────────────────────────────
-function PrimaryButton({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      style={{
-        display: "inline-flex", alignItems: "center", gap: "6px",
-        padding: "9px 18px", background: "#932a1c", color: "white",
-        fontSize: "0.8rem", fontWeight: 600, borderRadius: "4px",
-        border: "1.5px solid #932a1c", textDecoration: "none",
-        letterSpacing: "0.01em", whiteSpace: "nowrap", cursor: "pointer",
-        transition: "background 0.2s, border-color 0.2s",
-      }}
-      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = "#7a2216"; el.style.borderColor = "#7a2216"; }}
-      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = "#932a1c"; el.style.borderColor = "#932a1c"; }}
-    >
-      {children} <span style={{ fontSize: "0.75rem" }}>→</span>
-    </a>
-  );
-}
-
-function SecondaryButton({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <a
-      href={href}
-      style={{
-        display: "inline-flex", alignItems: "center", gap: "6px",
-        padding: "9px 18px", background: "transparent", color: "white",
-        fontSize: "0.8rem", fontWeight: 600, borderRadius: "4px",
-        border: "1.5px solid rgba(255,255,255,0.35)", textDecoration: "none",
-        letterSpacing: "0.01em", whiteSpace: "nowrap", cursor: "pointer",
-        transition: "border-color 0.2s, background 0.2s",
-      }}
-      onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = "rgba(255,255,255,0.65)"; el.style.background = "rgba(255,255,255,0.06)"; }}
-      onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = "rgba(255,255,255,0.35)"; el.style.background = "transparent"; }}
-    >
-      {children} <span style={{ fontSize: "0.75rem" }}>→</span>
-    </a>
-  );
-}
-
-// ───────────────────────────────────────────────────────────────────────────
 const EASE = [0.4, 0, 0.2, 1] as [number, number, number, number];
 
+// ─── Buttons ────────────────────────────────────────────────────────────────
+function PrimaryBtn({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      className="inline-flex items-center gap-[7px] px-5 py-[10px] bg-[#9b2214] text-white text-[0.82rem] font-semibold rounded border border-[#9b2214] no-underline tracking-[0.01em] whitespace-nowrap transition-colors duration-200 hover:bg-[#7a1a10] hover:border-[#7a1a10]"
+    >
+      {children} <span className="text-[0.78rem]">→</span>
+    </a>
+  );
+}
+
+function SecondaryBtn({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      className="inline-flex items-center gap-[7px] px-5 py-[10px] bg-transparent text-white text-[0.82rem] font-semibold rounded border border-white/30 no-underline tracking-[0.01em] whitespace-nowrap transition-all duration-200 hover:border-white/55 hover:bg-white/[0.05]"
+    >
+      {children} <span className="text-[0.78rem]">→</span>
+    </a>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────────
 export function HeroSection() {
   const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
   };
 
+
   return (
     <>
+      {/* minimal style only for responsive gradient override */}
       <style>{`
-
-        /* ══════════════════════════════════════════════════════════════════
-           SECTION
-           Figma background — THREE layered zones:
-             Zone A (upper-right):  bright crimson #7a1212  → face glow area
-             Zone B (lower-left):   warm dark red  #aa1f1f  → behind text content
-             Zone C (everywhere else): near-black  #0b0101
-           Achieved with two radial-gradient layers stacked.
-        ══════════════════════════════════════════════════════════════════ */
-        .hero-section {
-          position: relative;
-          overflow: hidden;
-          min-height: 100vh;
-          background:
-            /* Zone B — warm red glow behind/below text block (lower-left) */
-            radial-gradient(
-              ellipse 52% 50% at 26% 48%,
-              rgba(131, 24, 24, 0.2) 10%,
-              rgba(49, 7, 7, 0.5)  62%,
-              transparent 68%
-            ),
-            /* Zone A — main portrait/face glow (upper-right) */
-            radial-gradient(
-              ellipse 62% 68% at 84% 20%,
-              #5f0f0f  0%,
-              #4a0a0a  7%,
-              #330505  6%,
-              #290404  40%
-            );
-        }
-
-        /* ══════════════════════════════════════════════════════════════════
-           PORTRAIT  — 42% width, head+shoulders only
-        ══════════════════════════════════════════════════════════════════ */
-        .hero-portrait-wrap {
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 42%;
-          height: 100%;
-          z-index: 1;
-          pointer-events: none;
-        }
-
-        /* ══════════════════════════════════════════════════════════════════
-           WATERMARK A — "Vandervoort"
-           Right-aligned, vertically centered-ish, faint white
-        ══════════════════════════════════════════════════════════════════ */
-        .hero-wm-vandervoort {
-          position: absolute;
-          top: 50%;
-          right: -10px;
-          transform: translateY(-55%);
-          z-index: 2;
-          pointer-events: none;
-          user-select: none;
-        }
-        .hero-wm-vandervoort span {
-          display: block;
-          font-size: clamp(52px, 8.5vw, 122px);
-          font-weight: 900;
-          color: white;
-          opacity: 0.05;
-          line-height: 1;
-          letter-spacing: -0.02em;
-          white-space: nowrap;
-        }
-
-        /* ══════════════════════════════════════════════════════════════════
-           WATERMARK B — "Robert"
-           SEPARATE div. Positioned:
-             • Below "Vandervoort" (top offset = Vandervoort top + its height)
-             • Shifted LEFT relative to Vandervoort — starts near portrait's
-               left edge so it peeks out behind/beside the image
-             • Smaller font
-             • Same near-invisible opacity
-        ══════════════════════════════════════════════════════════════════ */
-        .hero-wm-robert {
-          position: absolute;
-          /* Place it below Vandervoort: 50% + half-of-vandervoort-height */
-          top: calc(50% + clamp(40px, 6.5vw, 94px));
-          /* Shift left so "Robert" starts from ~58% from right = left of portrait */
-          right: 30%;
-          z-index: 2;
-          pointer-events: none;
-          user-select: none;
-        }
-        .hero-wm-robert span {
-          display: block;
-          font-size: clamp(38px, 6vw, 86px);
-          font-weight: 900;
-          color: white;
-          opacity: 0.05;
-          line-height: 1;
-          letter-spacing: -0.02em;
-          white-space: nowrap;
-        }
-
-        /* ══════════════════════════════════════════════════════════════════
-           CONTENT WRAPPER
-        ══════════════════════════════════════════════════════════════════ */
-        .hero-content-wrap {
-          position: relative;
-          z-index: 3;
-          max-width: 80rem;
-          margin: 0 auto;
-          padding: 0 1.5rem;
-          min-height: 100vh;
-          display: flex;
-          align-items: center;
-        }
-
-        /* ══════════════════════════════════════════════════════════════════
-           LEFT COLUMN
-        ══════════════════════════════════════════════════════════════════ */
-        .hero-left {
-          width: 100%;
-          max-width: 44%;
-          padding-top: 80px;
-          padding-bottom: 60px;
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-        }
-
-        .hero-h1 {
-          font-size: clamp(22px, 2.1vw, 32px);
-          font-weight: 800;
-          color: white;
-          line-height: 1.28;
-          letter-spacing: -0.02em;
-          margin: 0;
-        }
-
-        .hero-subline {
-          color: #E8D5D5;
-          font-size: 0.82rem;
-          line-height: 1.75;
-          margin: 0;
-        }
-
-        .hero-trust {
-          color: #A08888;
-          font-size: 0.78rem;
-          line-height: 1.65;
-          max-width: 380px;
-          margin: 0;
-        }
-
-        /* ══════════════════════════════════════════════════════════════════
-           RESPONSIVE — < LG (≤1023px)
-        ══════════════════════════════════════════════════════════════════ */
         @media (max-width: 1023px) {
-          .hero-section {
-            min-height: auto;
-            display: flex;
-            flex-direction: column;
+          .hero-bg {
             background: radial-gradient(
-              ellipse 120% 50% at 50% 70%,
-              #5C0B0B 0%, #350707 35%, #1A0404 65%, #0C0101 100%
-            );
+              ellipse 110% 52% at 50% 60%,
+              #5c0b0b 0%, #340606 36%, #1a0303 62%, #100101 100%
+            ) !important;
           }
-          .hero-content-wrap {
-            order: 1; min-height: auto;
-            flex-direction: column; align-items: stretch; padding: 0;
-          }
-          .hero-left { max-width: 100%; padding: 110px 20px 32px; gap: 14px; }
-          .hero-portrait-wrap {
-            order: 2; position: relative !important;
-            width: 100% !important; height: min(70vh, 520px);
-            top: auto !important; right: auto !important; flex-shrink: 0;
-          }
-          .hero-portrait-wrap img {
-            object-fit: contain !important; object-position: center top !important;
-            mask-image: none !important; -webkit-mask-image: none !important;
-          }
-          .hero-wm-vandervoort, .hero-wm-robert { display: none; }
-          .hero-h1 { font-size: clamp(22px, 4.5vw, 32px); }
-          .hero-trust { max-width: 100%; }
         }
-
-        /* ══════════════════════════════════════════════════════════════════
-           RESPONSIVE — Mobile (≤639px)
-        ══════════════════════════════════════════════════════════════════ */
-        @media (max-width: 639px) {
-          .hero-section {
-            min-height: auto; display: flex; flex-direction: column;
-            background: radial-gradient(
-              ellipse 120% 50% at 50% 70%,
-              #5C0B0B 0%, #350707 35%, #1A0404 65%, #0C0101 100%
-            );
+        /* Desktop-only portrait mask — keeps image fully visible on mobile */
+        @media (min-width: 1024px) {
+          .hero-portrait-img {
+            mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 8%, black 20%, black 100%),
+                        linear-gradient(to bottom, black 28%, rgba(0,0,0,0.4) 58%, transparent 82%);
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 8%, black 20%, black 100%),
+                                linear-gradient(to bottom, black 28%, rgba(0,0,0,0.4) 58%, transparent 82%);
+            mask-composite: intersect;
+            -webkit-mask-composite: source-in;
           }
-          .hero-content-wrap {
-            order: 1; min-height: auto;
-            flex-direction: column; align-items: stretch; padding: 0;
-          }
-          .hero-left { max-width: 100%; padding: 100px 20px 32px; gap: 14px; }
-          .hero-portrait-wrap {
-            order: 2; position: relative !important;
-            width: 100% !important; height: 280px;
-            top: auto !important; right: auto !important; flex-shrink: 0;
-          }
-          .hero-wm-vandervoort, .hero-wm-robert { display: none; }
-          .hero-h1 { font-size: clamp(22px, 6.5vw, 30px); }
-          .hero-trust { max-width: 100%; font-size: 0.78rem; }
         }
-
-        /* ══════════════════════════════════════════════════════════════════
-           RESPONSIVE — Small tablet (640–767px)
-        ══════════════════════════════════════════════════════════════════ */
-        @media (min-width: 640px) and (max-width: 767px) {
-          .hero-left { max-width: 70%; }
-          .hero-portrait-wrap { width: 55%; opacity: 0.55; }
-        }
-
       `}</style>
 
-      <section className="hero-section">
-
-        {/* ── Portrait ── */}
+      <section
+        className="hero-bg relative overflow-hidden flex flex-col lg:block lg:min-h-screen"
+        style={{
+          /* Peak #9a1414 at 80% x 36% — bright crimson behind face,
+             dark near-black (#0a0101) at edges & top corners            */
+          background:
+            "radial-gradient(ellipse 62% 65% at 80% 36%, #9a1414 0%, #650c0c 22%, #280404 48%, #0a0101 100%)",
+        }}
+      >
+        {/* ── Portrait ────────────────────────────────────────────────────── */}
+        {/*   Mobile: in-flow below content  |  Desktop lg+: absolute right   */}
         <motion.div
-          className="hero-portrait-wrap"
+          className="
+            order-2
+            relative w-full h-[320px]
+            sm:h-[460px]
+            lg:order-none lg:absolute lg:top-0 lg:right-0 lg:w-[44%] lg:h-full lg:z-[2]
+            pointer-events-none
+          "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.15 }}
         >
-          {/* Warm red face glow overlay */}
-          <div style={{
-            position: "absolute", inset: 0, zIndex: 0,
-            background: "radial-gradient(ellipse 70% 52% at 50% 18%, rgba(155,20,8,0.55) 0%, transparent 58%)",
-          }} />
+          {/* Desktop-only face glow overlay — hidden on mobile */}
+          <div
+            className="hidden lg:block absolute inset-0 z-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 65% 50% at 50% 30%, rgba(110,16,6,0.32) 0%, transparent 62%)",
+            }}
+          />
+
+          {/* Portrait image — mask applied lg+ only via .hero-portrait-img CSS */}
           <img
             src="/images/hero-bg.png"
-            alt="Robert Vandervoort - Strategic Advisor"
+            alt="Robert Vandervoort – Strategic Advisor"
+            className="hero-portrait-img absolute top-0 right-18 w-full h-full object-contain object-top lg:object-cover z-[1]"
+          />
+
+          {/* Mobile-only: very soft bottom fade inside portrait so it blends
+              into the next section without a hard line. Height is small enough
+              (25%) that the face/body stays fully visible.                     */}
+          <div
+            className="lg:hidden absolute bottom-0 left-0 right-0 h-[30%] z-[2] pointer-events-none"
             style={{
-              position: "absolute", top: 0, right: 0,
-              width: "100%", height: "100%",
-              objectFit: "cover",
-              objectPosition: "center top",
-              zIndex: 1,
-              /* Fades figure out by ~78%, rest pure dark */
-              maskImage: "linear-gradient(to bottom, black 32%, rgba(0,0,0,0.4) 58%, transparent 78%)",
-              WebkitMaskImage: "linear-gradient(to bottom, black 32%, rgba(0,0,0,0.4) 58%, transparent 78%)",
+              background:
+                "linear-gradient(to top, #1b0404 0%, rgba(27,4,4,0.55) 45%, transparent 100%)",
             }}
           />
         </motion.div>
 
-        {/* ── Watermark A: "Vandervoort" — right, vertically centered ── */}
-        <div className="hero-wm-vandervoort">
-          <span>Vandervoort</span>
+        {/* ── Watermark "Vandervoort" — RIGHT edge, upper portrait zone ─── */}
+        {/* right:-8px pins it to the right; content-wrap (z-4) hides "Vander" */}
+        <div
+          className="hidden lg:block absolute right-[-8px] z-[3] pointer-events-none select-none"
+          style={{ top: "40%", transform: "translateY(-50%)" }}
+        >
+          <span
+            className="block font-black text-white leading-none tracking-[-0.03em] whitespace-nowrap"
+            style={{ fontSize: "clamp(42px, 6.5vw, 138px)", opacity: 0.02 }}
+          >
+            voort
+          </span>
         </div>
 
-        {/* ── Watermark B: "Robert" — SEPARATE div, below & left of Vandervoort ── */}
-        <div className="hero-wm-robert">
-          <span>Robert</span>
+        {/* ── Watermark "Robert" — RIGHT side, below Vandervoort ──────── */}
+        {/* Positioned right:12% so it sits inside the portrait area       */}
+        <div
+          className="hidden lg:block absolute right-[26%] z-[3] pointer-events-none select-none"
+          style={{ top: "calc(40% + clamp(36px, 5.5vw, 80px))" }}
+        >
+          <span
+            className="block font-black text-white leading-none tracking-[-0.03em] whitespace-nowrap"
+            style={{ fontSize: "clamp(48px, 7.5vw, 108px)", opacity: 0.01 }}
+          >
+            obert
+          </span>
         </div>
 
-        {/* ── Main content ── */}
-        <div className="hero-content-wrap">
+        {/* ── Thin vertical decorative line ──────────────────────────────── */}
+        {/* Midpoint between left screen edge (0%) and portrait left (~56%) */}
+        <div
+          className="hidden lg:block absolute top-0 bottom-0 left-[28%] w-px z-[1] pointer-events-none"
+          style={{ background: "rgba(255,255,255,0.055)" }}
+        />
+
+        {/* ── Content ─────────────────────────────────────────────────────── */}
+        <div className="order-1 relative z-[4] max-w-7xl mx-auto w-full px-6 lg:px-8 lg:min-h-screen flex items-center">
           <motion.div
-            className="hero-left"
+            className="
+              w-full flex flex-col gap-[18px]
+              pt-24 pb-8
+              lg:max-w-[46%] lg:pt-20 lg:pb-16
+            "
             initial="hidden"
             animate="visible"
             variants={{
@@ -322,52 +172,73 @@ export function HeroSection() {
             }}
           >
             {/* Tag */}
-            <motion.div variants={fadeUp} style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-              <span style={{ width: "7px", height: "7px", background: "#932a1c", borderRadius: "1px", flexShrink: 0 }} />
-              <span style={{ color: "#E8D5D5", fontSize: "0.8rem", fontWeight: 500, letterSpacing: "0.01em" }}>
+            <motion.div variants={fadeUp} className="flex items-center gap-2">
+              <span className="w-[7px] h-[7px] bg-[#c03020] rounded-[2px] flex-shrink-0" />
+              <span className="text-[#d0bbbb] text-[0.8rem] font-medium tracking-[0.02em]">
                 Strategic Advisor
               </span>
             </motion.div>
 
             {/* H1 */}
-            <motion.h1 className="hero-h1" variants={fadeUp}>
+            <motion.h1
+              variants={fadeUp}
+              className="m-0 text-white font-extrabold leading-[1.25] tracking-[-0.022em]"
+              style={{ fontSize: "clamp(22px, 2.2vw, 34px)" }}
+            >
               Who Leaders Call When the Stakes Are High and Getting It Wrong{" "}
-              <mark style={{
-                background: "#932a1c", color: "white",
-                padding: "1px 5px 3px", borderRadius: "3px",
-                WebkitBoxDecorationBreak: "clone", boxDecorationBreak: "clone",
-              }}>
+              <mark
+                className="bg-[#9b2214] text-white rounded-[3px] px-[6px] pt-[1px] pb-[3px]"
+                style={
+                  {
+                    WebkitBoxDecorationBreak: "clone",
+                    boxDecorationBreak: "clone",
+                  } as React.CSSProperties
+                }
+              >
                 Costs Millions
               </mark>
             </motion.h1>
 
             {/* Subheadline */}
-            <motion.p className="hero-subline" variants={fadeUp}>
-              I pressure-test ideas before you waste people, capital, or credibility.
+            <motion.p
+              variants={fadeUp}
+              className="m-0 text-[#c8b4b4] text-[0.84rem] leading-[1.72]"
+            >
+              I pressure-test ideas before you waste people, capital, or
+              credibility.
             </motion.p>
 
             {/* CTAs */}
-            <motion.div variants={fadeUp} style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-              <PrimaryButton href="#contact">Book Me to Speak</PrimaryButton>
-              <SecondaryButton href="#services">Get No-BS Consulting</SecondaryButton>
+            <motion.div
+              variants={fadeUp}
+              className="flex flex-wrap gap-[10px]"
+            >
+              <PrimaryBtn href="#contact">Book Me to Speak</PrimaryBtn>
+              <SecondaryBtn href="#services">Get No-BS Consulting</SecondaryBtn>
             </motion.div>
 
             {/* Trust line */}
-            <motion.p className="hero-trust" variants={fadeUp}>
-              Trusted inside Fortune 100 and global enterprise environments for
-              high-stakes AI, product, and governance decisions.
+            <motion.p
+              variants={fadeUp}
+              className="m-0 text-[#8a7272] text-[0.78rem] leading-[1.65] max-w-[390px] lg:max-w-[390px]"
+            >
+              Trusted inside Fortune 100 and global enterprise environments
+              <br className="hidden sm:block" />
+              {" "}for high-stakes AI, product, and governance decisions.
             </motion.p>
           </motion.div>
         </div>
 
-        {/* Bottom fade */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0,
-          height: "140px",
-          background: "linear-gradient(to top, #0b0101, transparent)",
-          zIndex: 4, pointerEvents: "none",
-        }} />
-
+        {/* ── Desktop bottom blend (lg+ only) ────────────────────────────── */}
+        {/* Hidden on mobile — portrait is in-flow so absolute fade would   */}
+        {/* cover it. Mobile blend is handled inside the portrait-wrap above */}
+        <div
+          className="hidden lg:block absolute bottom-0 left-0 right-0 h-[200px] z-[5] pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to top, #1b0404 0%, rgba(19,2,2,0.7) 45%, rgba(10,1,1,0.3) 75%, transparent 100%)",
+          }}
+        />
       </section>
     </>
   );

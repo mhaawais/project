@@ -119,6 +119,7 @@ export function BeyondBioSection() {
         ══════════════════════════════════════════════════════════ */
         .bio-section {
           background:
+            linear-gradient(to bottom, #220404 0, transparent 110px),
             radial-gradient(
               ellipse 80% 110% at 5% 45%,
               #3d0808 0%,

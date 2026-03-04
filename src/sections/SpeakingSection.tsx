@@ -146,6 +146,7 @@ export function SpeakingSection() {
   padding: 60px 24px 50px;
 
   background:
+    linear-gradient(to bottom, #0a0101 0, transparent 100px),
     radial-gradient(
       ellipse 60% 80% at 50% 50%,
       rgba(66, 15, 9, 0.35) 0%,
@@ -171,7 +172,7 @@ export function SpeakingSection() {
 
         .spk-sub {
           font-size: clamp(14px, 1.2vw, 16px);
-          color: #c0aaaa;
+          color: #ffebeb;
           line-height: 1.75;
           margin: 0 auto 10px;
           max-width: 620px;
@@ -219,12 +220,12 @@ export function SpeakingSection() {
           left: 0;
           top: 0;
           bottom: 0;
-          z-index: 1;
+          z-index: 2;
           pointer-events: none;
           user-select: none;
           display: flex;
           flex-direction: row;
-          align-items: center;
+          align-items: end;
           gap: 4px;
         }
 
@@ -232,8 +233,8 @@ export function SpeakingSection() {
           display: block;
           font-size: clamp(40px, 8vw, 115px);
           font-weight: 900;
-          color: white/70;
-          opacity: 0.1;
+          color: #ffa1a1;
+          opacity: 0.04;
           letter-spacing: -0.02em;
           line-height: 1;
           white-space: nowrap;
@@ -244,7 +245,7 @@ export function SpeakingSection() {
         /* ── Grid: left col shrunk so text is closer to portrait ── */
         .spk-grid {
           position: relative;
-          z-index: 2;
+          z-index: 1;
           display: grid;
           grid-template-columns: 52% 48%;
           min-height: 620px;

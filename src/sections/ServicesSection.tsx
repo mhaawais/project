@@ -141,7 +141,7 @@ export function ServicesSection() {
         .svc-watermark {
           position: absolute;
           top: 50%;
-          right: -12px;
+          right: 26px;
           transform: translateY(-50%);
           pointer-events: none;
           user-select: none;
@@ -149,10 +149,10 @@ export function ServicesSection() {
         }
         .svc-watermark span {
           display: block;
-          font-size: clamp(72px, 12vw, 172px);
+          font-size: clamp(72px, 10vw, 172px);
           font-weight: 900;
           color: white;
-          opacity: 0.055;
+          opacity: 0.03;
           line-height: 1;
           letter-spacing: -0.02em;
           white-space: nowrap;

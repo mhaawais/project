@@ -83,6 +83,7 @@ export function AboutSection() {
           position: relative;
           padding: 60px 40px;
           background:
+            linear-gradient(to bottom, #1b0404 0, transparent 120px, transparent calc(100% - 120px), #180202 100%),
             radial-gradient(
               ellipse 70% 80% at 20% 50%,
               rgba(140, 28, 20, 0.75) 0%,
@@ -101,6 +102,8 @@ export function AboutSection() {
         }
 
         .about-outer {
+          position: relative;
+          z-index: 2;
           max-width: 860px;
           width: 100%;
           margin: 0 auto;
@@ -251,10 +254,9 @@ export function AboutSection() {
         @media (max-width: 767px) {
           .about-section { padding: 28px 16px; min-height: unset; }
           .about-card    { grid-template-columns: 1fr; border-radius: 12px; }
-          /* On mobile: image col has padding on sides + top, no bottom (content follows) */
           .about-img-col { padding: 16px 16px 0 16px; }
           .about-img-frame { min-height: 260px; border-radius: 8px; }
-          .about-img     { object-position: center top; border-radius: 8px; }
+          .about-img     { object-fit: contain; object-position: center top; border-radius: 8px; }
           .about-content { padding: 20px 20px 28px; }
           .about-h2      { font-size: clamp(20px, 5.5vw, 26px); margin-bottom: 14px; }
           .about-para    { font-size: 0.84rem; line-height: 1.68; margin-bottom: 13px; }
@@ -267,7 +269,7 @@ export function AboutSection() {
           .about-section { padding: 20px 12px; }
           .about-img-col { padding: 12px 12px 0 12px; }
           .about-img-frame { min-height: 220px; border-radius: 6px; }
-          .about-img     { border-radius: 6px; }
+          .about-img     { object-fit: contain; border-radius: 6px; }
           .about-content { padding: 16px 16px 24px; }
           .about-h2      { font-size: clamp(18px, 5.5vw, 22px); }
           .about-para    { font-size: 0.82rem; }

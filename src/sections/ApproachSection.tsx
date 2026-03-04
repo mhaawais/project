@@ -85,13 +85,14 @@ export function ApproachSection() {
         .approach-section {
           position: relative;
           overflow: hidden;
-          background: radial-gradient(
-            ellipse 65% 80% at 15% 50%,
-            #6b2424 10%,
-            #581e1e 40%,
-            #330e0e 70%,
-            #0a0101 100%
-          );
+       background: linear-gradient(
+  to bottom,
+  #6b0f0f 0%,
+  #5a0c0c 15%,
+  #3a0505 35%,
+  #1e0202 65%,
+  #0d0201 100%
+);
           padding: 64px 24px;
         }
 
@@ -108,9 +109,9 @@ export function ApproachSection() {
 
         .approach-watermark span {
           display: block;
-          font-size: clamp(60px, 12vw, 120px);
+          font-size: clamp(60px, 8vw, 110px);
           font-weight: 900;
-          color: white/90;
+          color: #ce5757;
           opacity: 0.05;
           letter-spacing: -0.02em;
           line-height: 1;
@@ -165,15 +166,16 @@ export function ApproachSection() {
 
         /* ── Items container ── */
         .approach-items {
-          display: flex;
-          flex-direction: column;
-          gap: 0;
+          display: table;
+          align-self: flex-start;
+          max-width: 100%;
         }
 
         /* ── Each approach item ── */
         .approach-item {
           padding: 16px 0;
         }
+
 
         .approach-item-title {
           font-size: clamp(14px, 1.25vw, 17px);

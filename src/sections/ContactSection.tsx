@@ -163,12 +163,21 @@ export function ContactSection() {
           position: relative;
           overflow: hidden;
           padding: 90px 0;
-          background: radial-gradient(
-            ellipse 90% 70% at 50% 0%,
-            #3a1010 30%,
-            #1a0606 45%,
-            #360b0b 100%
-          );
+          background:
+  linear-gradient(
+    to bottom,
+    #310505 0%,
+    #470505 20%,
+    #1b0202 45%,
+    #1a0101 90%,
+    #0d0201 100%
+  ),
+  radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    #350b0b 25%,
+    #140303 85%,
+    #0d0201 100%
+  );
         }
 
         /* Lighter "cinematic" shading in the bg (matches screenshot feel) */
@@ -212,7 +221,7 @@ export function ContactSection() {
         .rv-contact-watermark {
           position: absolute;
           z-index: 5;
-          left: 56px;
+          left: 36px;
           top: 54%; /* moved slightly down */
           transform: translateY(-50%);
           pointer-events: none;
@@ -224,8 +233,8 @@ export function ContactSection() {
         .rv-contact-watermark span {
           font-weight: 900;
           letter-spacing: -0.03em;
-          font-size: clamp(64px, 10vw, 150px);
-          color: rgba(255, 255, 255, 0.55);
+          font-size: clamp(64px, 10vw, 130px);
+          color: rgba(252, 170, 170, 0.55);
           text-shadow: 0 10px 40px rgba(0,0,0,0.28);
         }
 

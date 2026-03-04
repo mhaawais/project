@@ -204,7 +204,10 @@ export function TestimonialsSection() {
            SECTION
         ══════════════════════════════════════════════════════════ */
         .tst-section {
+          position: relative;
+          overflow: hidden;
           background:
+            linear-gradient(to bottom, #0a0101 0, transparent 110px, transparent calc(100% - 100px), #220404 100%),
             radial-gradient(
               ellipse 90% 60% at 50% 0%,
               #2e0707 20%,
@@ -227,7 +230,7 @@ export function TestimonialsSection() {
           text-align: center;
           font-size: clamp(20px, 2.4vw, 32px);
           font-weight: 800;
-          color: #797878;
+          color: #ffffff;
           line-height: 1.28;
           margin: 0 auto 48px;
           max-width: 720px;
