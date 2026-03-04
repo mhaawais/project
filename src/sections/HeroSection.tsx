@@ -76,7 +76,7 @@ export function HeroSection() {
           /* Peak #9a1414 at 80% x 36% — bright crimson behind face,
              dark near-black (#0a0101) at edges & top corners            */
           background:
-            "radial-gradient(ellipse 62% 65% at 80% 36%, #9a1414 0%, #650c0c 22%, #280404 48%, #0a0101 100%)",
+            "radial-gradient(ellipse 80% 70% at 90% 32%, #3a0909 0%, #350606 35%, #0a0101 70%, #080101 100%)",
         }}
       >
         {/* ── Portrait ────────────────────────────────────────────────────── */}
@@ -93,15 +93,6 @@ export function HeroSection() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.15 }}
         >
-          {/* Desktop-only face glow overlay — hidden on mobile */}
-          <div
-            className="hidden lg:block absolute inset-0 z-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 65% 50% at 50% 30%, rgba(110,16,6,0.32) 0%, transparent 62%)",
-            }}
-          />
-
           {/* Portrait image — mask applied lg+ only via .hero-portrait-img CSS */}
           <img
             src="/images/hero-bg.png"
